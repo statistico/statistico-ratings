@@ -33,7 +33,7 @@ workflows:
 
 jobs:
   build-and-test:
-    working_directory: ~/go/src/github.com/statistico/statistico-football-data
+    working_directory: ~/go/src/github.com/statistico/statistico-ratings
     machine: true
     environment:
       GOPATH: /home/circleci/go
@@ -52,7 +52,6 @@ jobs:
       - run:
           name: Cache Built Images
           command: |
-            docker images
             chmod +x ./.circleci/deploy/docker-save.sh && ./.circleci/deploy/docker-save.sh
       - persist_to_workspace:
           root: *workspace_root
@@ -78,13 +77,13 @@ jobs:
     steps:
       - aws-cli/setup
       - aws-ecs/update-service:
-          family: 'statistico-football-data-grpc'
+          family: 'statistico-ratings-grpc'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-football-data:${CIRCLE_SHA1}
+            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
       - aws-ecs/update-service:
-          family: 'statistico-football-data-background'
+          family: 'statistico-ratings-background'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-football-data:${CIRCLE_SHA1},
-            container=migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-football-data:${CIRCLE_SHA1}
+            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
+            container=migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
