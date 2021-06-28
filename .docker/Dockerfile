@@ -14,7 +14,7 @@ FROM alpine
 RUN apk --no-cache add ca-certificates
 WORKDIR /opt
 COPY ./bin ./bin
-COPY ./database ./database
+#COPY ./database ./database
 COPY ./.docker/crontab /etc/crontabs/root
 COPY ./.docker/wait-for-it.sh .
 COPY --from=builder /go/bin/goose /usr/local/bin
