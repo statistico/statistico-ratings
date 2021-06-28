@@ -1,0 +1,61 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: statistico
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: statistico_ratings
+    volumes:
+      - .:/opt
+    ports:
+      - 5432:5432
+    networks:
+      - statistico-ratings_default
+
+  console: &console
+    build:
+      dockerfile: .docker/Dockerfile
+      context: .
+    environment:
+      DB_DRIVER: postgres
+      DB_HOST: postgres
+      DB_NAME: statistico_ratings
+      DB_PASSWORD: password
+      DB_USER: statistico
+      DB_PORT: 5432
+    tty: true
+    links:
+      - postgres
+    networks:
+      - statistico-football-data_default
+
+  migrate:
+    <<: *console
+    command: ["./bin/migrate"]
+
+  test:
+    build:
+      dockerfile: .docker/test/Dockerfile
+      context: .
+    volumes:
+      - .:/opt
+    environment:
+      DB_DRIVER: postgres
+      DB_HOST: postgres
+      DB_PASSWORD: password
+      DB_NAME: statistico_ratings
+      DB_USER: statistico
+      DB_PORT: 5432
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    networks:
+      - statistico-football-data_default
+
+networks:
+  statistico-ratings_default:
+    external: false
+  statistico_internal:
+    external: true

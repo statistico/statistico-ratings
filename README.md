@@ -1,1 +1,1 @@
-# statistico-ratings
+# Statistico Ratings
