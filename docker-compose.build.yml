@@ -52,7 +52,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - statistico-football-data_default
+      - statistico-ratings_default
 
 networks:
   statistico-ratings_default:
