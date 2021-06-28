@@ -28,7 +28,7 @@ services:
     links:
       - postgres
     networks:
-      - statistico-football-data_default
+      - statistico-ratings_default
 
   migrate:
     <<: *console
