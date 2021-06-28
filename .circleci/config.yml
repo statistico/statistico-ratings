@@ -52,6 +52,7 @@ jobs:
       - run:
           name: Cache Built Images
           command: |
+            docker images
             chmod +x ./.circleci/deploy/docker-save.sh && ./.circleci/deploy/docker-save.sh
       - persist_to_workspace:
           root: *workspace_root
