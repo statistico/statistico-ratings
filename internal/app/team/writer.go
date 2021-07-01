@@ -3,6 +3,7 @@ package team
 import (
 	"database/sql"
 	sq "github.com/Masterminds/squirrel"
+	_ "github.com/lib/pq"
 	"github.com/statistico/statistico-ratings/internal/app"
 )
 
