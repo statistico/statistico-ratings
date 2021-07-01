@@ -5,6 +5,7 @@ import "time"
 type Rating struct {
 	TeamID    uint8
 	FixtureID int8
+	SeasonID  int8
 	Attack    Points
 	Defence   Points
 	Timestamp time.Time

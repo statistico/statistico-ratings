@@ -4,6 +4,7 @@ CREATE TABLE team_rating (
   id SERIAL,
   team_id INTEGER NOT NULL,
   fixture_id INTEGER NOT NULL,
+  season_id INTEGER NOT NULL,
   attack_total INTEGER NOT NULL,
   attack_points INTEGER NOT NULL,
   defence_total INTEGER NOT NULL,
