@@ -6,24 +6,28 @@ import (
 	"github.com/statistico/statistico-ratings/internal/app"
 )
 
-type RatingRepository interface {
+type RatingWriter interface {
 	Insert(r *Rating) error
 }
 
-type ratingRepository struct {
+type ratingWriter struct {
 	connection *sql.DB
 }
 
-func (r *ratingRepository) Insert(x *Rating) error {
+func (r *ratingWriter) Insert(x *Rating) error {
 	var exists bool
 
 	b := queryBuilder(r.connection)
 
-	err := b.Select(`SELECT exists (SELECT id FROM team_rating where name = $1 and user_id = $2)`).
+	err := b.
+		Select("id").
+		From("team_rating").
+		Prefix("SELECT exists (").
 		Where(sq.Eq{"team_id": x.TeamID}).
 		Where(sq.Eq{"season_id": x.SeasonID}).
 		Where(sq.Eq{"fixture_id": x.FixtureID}).
-		Scan(exists)
+		Suffix(")").
+		Scan(&exists)
 
 	if err != nil {
 		return err
@@ -48,7 +52,16 @@ func (r *ratingRepository) Insert(x *Rating) error {
 			"defence_total",
 			"defence_points",
 			"timestamp").
-		Values().
+		Values(
+			x.TeamID,
+			x.FixtureID,
+			x.SeasonID,
+			x.Attack.Total,
+			x.Attack.Difference,
+			x.Defence.Total,
+			x.Defence.Difference,
+			x.Timestamp.Unix(),
+		).
 		Exec()
 
 	return err
@@ -58,6 +71,6 @@ func queryBuilder(c *sql.DB) sq.StatementBuilderType {
 	return sq.StatementBuilder.PlaceholderFormat(sq.Dollar).RunWith(c)
 }
 
-func NewRatingRepository(c *sql.DB) RatingRepository {
-	return &ratingRepository{connection: c}
+func NewRatingWriter(c *sql.DB) RatingWriter {
+	return &ratingWriter{connection: c}
 }
