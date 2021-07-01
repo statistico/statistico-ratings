@@ -16,3 +16,11 @@ func (d *DuplicationError) Error() string {
 		d.SeasonID,
 	)
 }
+
+type NotFoundError struct {
+	TeamID uint64
+}
+
+func (n *NotFoundError) Error() string {
+	return fmt.Sprintf("team %d rating does not exist", n.TeamID)
+}
