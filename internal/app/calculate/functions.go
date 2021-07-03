@@ -2,12 +2,16 @@ package calculate
 
 import "math"
 
-func EloValue(attack, defence int64, k int8, g float64) float64 {
+// PointsValue calculates the value for the attack vs defence scenario using
+// an ELO based calculation.
+func PointsValue(attack, defence int64, k int8, g float64) float64 {
 	ge := GoalExpectancy(attack, defence)
 	val := (float64(k)*adjustGoals(g)) * (g - ge)
 	return float64(int(val * 100)) / 100
 }
 
+// GoalExpectancy calculates the expected goal probability based on attack and
+// defence values.
 func GoalExpectancy(attack, defence int64) float64 {
 	diff := attack - defence
 	d := float64(-diff) / 400

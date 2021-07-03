@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestEloValue(t *testing.T) {
+func TestPointsValue(t *testing.T) {
 	t.Run("returns float value for elo calculation", func(t *testing.T) {
 		t.Helper()
 
@@ -48,7 +48,7 @@ func TestEloValue(t *testing.T) {
 		}
 
 		for _, st := range s {
-			e := calculate.EloValue(st.Attack, st.Defence, st.K, st.G)
+			e := calculate.PointsValue(st.Attack, st.Defence, st.K, st.G)
 
 			assert.Equal(t, st.Value, e)
 		}
