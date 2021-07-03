@@ -3,15 +3,15 @@ package calculate
 import "math"
 
 // PointsValue calculates the value for the attack vs defence scenario using
-// an ELO based calculation.
-func PointsValue(attack, defence int64, k int8, g float64) float64 {
+// an ELO based calculation. k argument relates to the k factor used with elo
+// calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
+func PointsValue(attack, defence int64, k int8, goals float64) float64 {
 	ge := GoalExpectancy(attack, defence)
-	val := (float64(k)*adjustGoals(g)) * (g - ge)
+	val := (float64(k)*adjustGoals(goals)) * (goals - ge)
 	return float64(int(val * 100)) / 100
 }
 
-// GoalExpectancy calculates the expected goal probability based on attack and
-// defence values.
+// GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
 func GoalExpectancy(attack, defence int64) float64 {
 	diff := attack - defence
 	d := float64(-diff) / 400
