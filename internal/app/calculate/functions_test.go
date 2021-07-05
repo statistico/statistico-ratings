@@ -182,6 +182,78 @@ func TestAdjustedGoals(t *testing.T) {
 				1.5,
 				2.66,
 			},
+			{
+				1,
+				2,
+				[]statistico.GoalEvent{
+					{
+						TeamId:               1,
+						Minute:               25,
+					},
+					{
+						TeamId:               1,
+						Minute:               42,
+					},
+					{
+						TeamId:               2,
+						Minute:               85,
+					},
+					{
+						TeamId:               2,
+						Minute:               89,
+					},
+					{
+						TeamId:               1,
+						Minute:               95,
+					},
+				},
+				[]statistico.CardEvent{
+					{
+						TeamId:               2,
+						Type:                 "yellowcard",
+						PlayerId:             0,
+						Minute:               2,
+					},
+				},
+				3.0,
+				2.0,
+			},
+			{
+				1,
+				2,
+				[]statistico.GoalEvent{
+					{
+						TeamId:               1,
+						Minute:               25,
+					},
+					{
+						TeamId:               1,
+						Minute:               42,
+					},
+					{
+						TeamId:               1,
+						Minute:               85,
+					},
+					{
+						TeamId:               1,
+						Minute:               89,
+					},
+					{
+						TeamId:               1,
+						Minute:               95,
+					},
+				},
+				[]statistico.CardEvent{
+					{
+						TeamId:               2,
+						Type:                 "redcard",
+						PlayerId:             0,
+						Minute:               2,
+					},
+				},
+				2.08,
+				0.0,
+			},
 		}
 
 		for _, st := range s {
