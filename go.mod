@@ -4,10 +4,10 @@ go 1.13
 
 require (
 	github.com/Masterminds/squirrel v1.5.0
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.5.0 // indirect
+	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/lib/pq v1.10.2
-	github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210703110459-5fbcb7a83547 // indirect
-	github.com/statistico/statistico-proto/go v0.0.0-20210422195817-59a711222ee6 // indirect
+	github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210703110459-5fbcb7a83547
+	github.com/statistico/statistico-proto/go v0.0.0-20210422195817-59a711222ee6
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect

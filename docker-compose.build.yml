@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/opt
     ports:
-      - 5432:5432
+      - 5435:5432
     networks:
       - statistico-ratings_default
 
