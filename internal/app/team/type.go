@@ -12,6 +12,6 @@ type Rating struct {
 }
 
 type Points struct {
-	Total      int64
-	Difference int64
+	Total      float64
+	Difference float64
 }

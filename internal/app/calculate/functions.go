@@ -8,14 +8,14 @@ import (
 // PointsValue calculates the value for the attack vs defence scenario using
 // an ELO based calculation. k argument relates to the k factor used with elo
 // calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
-func PointsValue(attack, defence int64, k int8, goals float64) float64 {
+func PointsValue(attack, defence float64, k int8, goals float64) float64 {
 	ge := GoalExpectancy(attack, defence)
 	val := (float64(k)*adjustGoals(goals)) * (goals - ge)
 	return float64(int(val * 100)) / 100
 }
 
 // GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
-func GoalExpectancy(attack, defence int64) float64 {
+func GoalExpectancy(attack, defence float64) float64 {
 	diff := attack - defence
 	d := float64(-diff) / 400
 	pow := 1 / (math.Pow(10, d) + 1)
@@ -25,7 +25,7 @@ func GoalExpectancy(attack, defence int64) float64 {
 // AdjustedGoals calculates the value of the goals scored for each team. A goal value can be increased or decreased
 // based on factors such as red cards, minute of goal and current score difference. The two float64 values returned
 // are the home goals as the first value and away goals as the second value.
-func AdjustedGoals(homeID, awayID uint64, goals []statistico.GoalEvent, cards []statistico.CardEvent) (float64, float64) {
+func AdjustedGoals(homeID, awayID uint64, goals []*statistico.GoalEvent, cards []*statistico.CardEvent) (float64, float64) {
 	var home int8
 	var away int8
 	var homeAdj float64
@@ -71,7 +71,7 @@ func calculateGoalValue(diff float64, min, clock uint32, teamRed, oppRed bool) f
 	return g
 }
 
-func hasBeenRedCard(cards []statistico.CardEvent, teamID uint64, min uint32) bool {
+func hasBeenRedCard(cards []*statistico.CardEvent, teamID uint64, min uint32) bool {
 	for _, card := range cards {
 		if card.Type == "redcard" && card.TeamId == teamID && card.Minute < min {
 			return true
