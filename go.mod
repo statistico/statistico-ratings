@@ -7,6 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/jonboulle/clockwork v0.2.2
 	github.com/lib/pq v1.10.2
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210703110459-5fbcb7a83547
 	github.com/statistico/statistico-proto/go v0.0.0-20210422195817-59a711222ee6
 	github.com/stretchr/testify v1.7.0
