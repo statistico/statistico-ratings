@@ -5,10 +5,10 @@ CREATE TABLE team_rating (
   team_id INTEGER NOT NULL,
   fixture_id INTEGER NOT NULL,
   season_id INTEGER NOT NULL,
-  attack_total INTEGER NOT NULL,
-  attack_points INTEGER NOT NULL,
-  defence_total INTEGER NOT NULL,
-  defence_points INTEGER NOT NULL,
+  attack_total DECIMAL NOT NULL,
+  attack_points DECIMAL NOT NULL,
+  defence_total DECIMAL NOT NULL,
+  defence_points DECIMAL NOT NULL,
   timestamp INTEGER NOT NULL
 );
 

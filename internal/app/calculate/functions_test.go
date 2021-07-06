@@ -12,8 +12,8 @@ func TestPointsValue(t *testing.T) {
 		t.Helper()
 
 		s := []struct{
-			Attack  int64
-			Defence int64
+			Attack  float64
+			Defence float64
 			K       int8
 			G       float64
 			Value   float64
@@ -60,8 +60,8 @@ func TestGoalExpectancy(t *testing.T) {
 		t.Helper()
 
 		s := []struct{
-			Attack  int64
-			Defence int64
+			Attack  float64
+			Defence float64
 			GoalExpectancy float64
 		} {
 			{
@@ -96,23 +96,23 @@ func TestAdjustedGoals(t *testing.T) {
 		s := []struct{
 			HomeID uint64
 			AwayID uint64
-			Goals  []statistico.GoalEvent
-			Cards  []statistico.CardEvent
+			Goals  []*statistico.GoalEvent
+			Cards  []*statistico.CardEvent
 			HomeGoals float64
 			AwayGoals float64
 		} {
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{},
-				[]statistico.CardEvent{},
+				[]*statistico.GoalEvent{},
+				[]*statistico.CardEvent{},
 				0.0,
 				0.0,
 			},
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{
+				[]*statistico.GoalEvent{
 					{
 						TeamId:               1,
 						Minute:               25,
@@ -122,14 +122,14 @@ func TestAdjustedGoals(t *testing.T) {
 						Minute:               42,
 					},
 				},
-				[]statistico.CardEvent{},
+				[]*statistico.CardEvent{},
 				2.0,
 				0.0,
 			},
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{
+				[]*statistico.GoalEvent{
 					{
 						TeamId:               1,
 						Minute:               25,
@@ -139,7 +139,7 @@ func TestAdjustedGoals(t *testing.T) {
 						Minute:               42,
 					},
 				},
-				[]statistico.CardEvent{
+				[]*statistico.CardEvent{
 					{
 						TeamId:               2,
 						Type:                 "redcard",
@@ -153,7 +153,7 @@ func TestAdjustedGoals(t *testing.T) {
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{
+				[]*statistico.GoalEvent{
 					{
 						TeamId:               1,
 						Minute:               25,
@@ -171,7 +171,7 @@ func TestAdjustedGoals(t *testing.T) {
 						Minute:               89,
 					},
 				},
-				[]statistico.CardEvent{
+				[]*statistico.CardEvent{
 					{
 						TeamId:               2,
 						Type:                 "redcard",
@@ -185,7 +185,7 @@ func TestAdjustedGoals(t *testing.T) {
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{
+				[]*statistico.GoalEvent{
 					{
 						TeamId:               1,
 						Minute:               25,
@@ -207,7 +207,7 @@ func TestAdjustedGoals(t *testing.T) {
 						Minute:               95,
 					},
 				},
-				[]statistico.CardEvent{
+				[]*statistico.CardEvent{
 					{
 						TeamId:               2,
 						Type:                 "yellowcard",
@@ -221,7 +221,7 @@ func TestAdjustedGoals(t *testing.T) {
 			{
 				1,
 				2,
-				[]statistico.GoalEvent{
+				[]*statistico.GoalEvent{
 					{
 						TeamId:               1,
 						Minute:               25,
@@ -243,7 +243,7 @@ func TestAdjustedGoals(t *testing.T) {
 						Minute:               95,
 					},
 				},
-				[]statistico.CardEvent{
+				[]*statistico.CardEvent{
 					{
 						TeamId:               2,
 						Type:                 "redcard",
