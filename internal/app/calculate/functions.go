@@ -10,8 +10,8 @@ import (
 // calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
 func PointsValue(attack, defence float64, k int8, goals float64) float64 {
 	ge := GoalExpectancy(attack, defence)
-	val := (float64(k)*adjustGoals(goals)) * (goals - ge)
-	return float64(int(val * 100)) / 100
+	val := (float64(k) * adjustGoals(goals)) * (goals - ge)
+	return float64(int(val*100)) / 100
 }
 
 // GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
@@ -19,7 +19,7 @@ func GoalExpectancy(attack, defence float64) float64 {
 	diff := attack - defence
 	d := float64(-diff) / 400
 	pow := 1 / (math.Pow(10, d) + 1)
-	return float64(int(pow * 100)) / 100
+	return float64(int(pow*100)) / 100
 }
 
 // AdjustedGoals calculates the value of the goals scored for each team. A goal value can be increased or decreased
@@ -48,7 +48,7 @@ func AdjustedGoals(homeID, awayID uint64, goals []*statistico.GoalEvent, cards [
 		}
 	}
 
-	return float64(int(homeAdj * 100)) / 100, float64(int(awayAdj * 100)) / 100
+	return float64(int(homeAdj*100)) / 100, float64(int(awayAdj*100)) / 100
 }
 
 func calculateGoalValue(diff float64, min, clock uint32, teamRed, oppRed bool) float64 {

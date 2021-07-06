@@ -3,8 +3,8 @@ package app
 import "fmt"
 
 type DuplicationError struct {
-	TeamID  uint64
-	FixtureID  uint64
+	TeamID    uint64
+	FixtureID uint64
 	SeasonID  uint64
 }
 

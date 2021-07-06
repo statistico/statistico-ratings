@@ -14,15 +14,15 @@ import (
 
 func TestRatingCalculator_ForFixture(t *testing.T) {
 	fixture := statistico.Fixture{
-		Id:                   26,
-		Season:               &statistico.Season{
-			Id:                   17462,
+		Id: 26,
+		Season: &statistico.Season{
+			Id: 17462,
 		},
-		HomeTeam:             &statistico.Team{
-			Id:                   10,
+		HomeTeam: &statistico.Team{
+			Id: 10,
 		},
-		AwayTeam:             &statistico.Team{
-			Id:                   12,
+		AwayTeam: &statistico.Team{
+			Id: 12,
 		},
 	}
 
@@ -30,11 +30,11 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		TeamID:    10,
 		FixtureID: 25,
 		SeasonID:  17462,
-		Attack:    team.Points{
+		Attack: team.Points{
 			Total:      1670,
 			Difference: 5,
 		},
-		Defence:   team.Points{
+		Defence: team.Points{
 			Total:      1542.45,
 			Difference: -4,
 		},
@@ -45,11 +45,11 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		TeamID:    12,
 		FixtureID: 25,
 		SeasonID:  17462,
-		Attack:    team.Points{
+		Attack: team.Points{
 			Total:      1870,
 			Difference: 15,
 		},
-		Defence:   team.Points{
+		Defence: team.Points{
 			Total:      1642.45,
 			Difference: -14,
 		},
@@ -67,7 +67,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		ctx := context.Background()
 
 		res := statistico.FixtureEventsResponse{
-			Goals:                []*statistico.GoalEvent{
+			Goals: []*statistico.GoalEvent{
 				{
 					TeamId: 10,
 					Minute: 47,
