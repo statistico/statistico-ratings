@@ -25,11 +25,11 @@ func TestRatingRepository_Insert(t *testing.T) {
 					TeamID:    1,
 					FixtureID: 55,
 					SeasonID:  17462,
-					Attack:    team.Points{
+					Attack: team.Points{
 						Total:      1728,
 						Difference: -3,
 					},
-					Defence:   team.Points{
+					Defence: team.Points{
 						Total:      1241,
 						Difference: 4,
 					},
@@ -42,11 +42,11 @@ func TestRatingRepository_Insert(t *testing.T) {
 					TeamID:    2,
 					FixtureID: 55,
 					SeasonID:  17462,
-					Attack:    team.Points{
+					Attack: team.Points{
 						Total:      1901,
 						Difference: 24,
 					},
-					Defence:   team.Points{
+					Defence: team.Points{
 						Total:      1023,
 						Difference: 2,
 					},
@@ -59,11 +59,11 @@ func TestRatingRepository_Insert(t *testing.T) {
 					TeamID:    1,
 					FixtureID: 120,
 					SeasonID:  17462,
-					Attack:    team.Points{
+					Attack: team.Points{
 						Total:      2810,
 						Difference: 13,
 					},
-					Defence:   team.Points{
+					Defence: team.Points{
 						Total:      1100,
 						Difference: -25,
 					},
@@ -98,11 +98,11 @@ func TestRatingRepository_Insert(t *testing.T) {
 			TeamID:    1,
 			FixtureID: 120,
 			SeasonID:  17462,
-			Attack:    team.Points{
+			Attack: team.Points{
 				Total:      2810,
 				Difference: 13,
 			},
-			Defence:   team.Points{
+			Defence: team.Points{
 				Total:      1100,
 				Difference: -25,
 			},

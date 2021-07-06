@@ -11,13 +11,13 @@ func TestPointsValue(t *testing.T) {
 	t.Run("returns float value for elo calculation", func(t *testing.T) {
 		t.Helper()
 
-		s := []struct{
+		s := []struct {
 			Attack  float64
 			Defence float64
 			K       int8
 			G       float64
 			Value   float64
-		} {
+		}{
 			{
 				1745,
 				1300,
@@ -59,11 +59,11 @@ func TestGoalExpectancy(t *testing.T) {
 	t.Run("returns calculated goal expectancy", func(t *testing.T) {
 		t.Helper()
 
-		s := []struct{
-			Attack  float64
-			Defence float64
+		s := []struct {
+			Attack         float64
+			Defence        float64
 			GoalExpectancy float64
-		} {
+		}{
 			{
 				1745,
 				1300,
@@ -93,14 +93,14 @@ func TestAdjustedGoals(t *testing.T) {
 	t.Run("returns values for home and away adjusted goals", func(t *testing.T) {
 		t.Helper()
 
-		s := []struct{
-			HomeID uint64
-			AwayID uint64
-			Goals  []*statistico.GoalEvent
-			Cards  []*statistico.CardEvent
+		s := []struct {
+			HomeID    uint64
+			AwayID    uint64
+			Goals     []*statistico.GoalEvent
+			Cards     []*statistico.CardEvent
 			HomeGoals float64
 			AwayGoals float64
-		} {
+		}{
 			{
 				1,
 				2,
@@ -114,12 +114,12 @@ func TestAdjustedGoals(t *testing.T) {
 				2,
 				[]*statistico.GoalEvent{
 					{
-						TeamId:               1,
-						Minute:               25,
+						TeamId: 1,
+						Minute: 25,
 					},
 					{
-						TeamId:               1,
-						Minute:               42,
+						TeamId: 1,
+						Minute: 42,
 					},
 				},
 				[]*statistico.CardEvent{},
@@ -131,20 +131,20 @@ func TestAdjustedGoals(t *testing.T) {
 				2,
 				[]*statistico.GoalEvent{
 					{
-						TeamId:               1,
-						Minute:               25,
+						TeamId: 1,
+						Minute: 25,
 					},
 					{
-						TeamId:               1,
-						Minute:               42,
+						TeamId: 1,
+						Minute: 42,
 					},
 				},
 				[]*statistico.CardEvent{
 					{
-						TeamId:               2,
-						Type:                 "redcard",
-						PlayerId:             0,
-						Minute:               2,
+						TeamId:   2,
+						Type:     "redcard",
+						PlayerId: 0,
+						Minute:   2,
 					},
 				},
 				1.5,
@@ -155,28 +155,28 @@ func TestAdjustedGoals(t *testing.T) {
 				2,
 				[]*statistico.GoalEvent{
 					{
-						TeamId:               1,
-						Minute:               25,
+						TeamId: 1,
+						Minute: 25,
 					},
 					{
-						TeamId:               1,
-						Minute:               42,
+						TeamId: 1,
+						Minute: 42,
 					},
 					{
-						TeamId:               2,
-						Minute:               85,
+						TeamId: 2,
+						Minute: 85,
 					},
 					{
-						TeamId:               2,
-						Minute:               89,
+						TeamId: 2,
+						Minute: 89,
 					},
 				},
 				[]*statistico.CardEvent{
 					{
-						TeamId:               2,
-						Type:                 "redcard",
-						PlayerId:             0,
-						Minute:               2,
+						TeamId:   2,
+						Type:     "redcard",
+						PlayerId: 0,
+						Minute:   2,
 					},
 				},
 				1.5,
@@ -187,32 +187,32 @@ func TestAdjustedGoals(t *testing.T) {
 				2,
 				[]*statistico.GoalEvent{
 					{
-						TeamId:               1,
-						Minute:               25,
+						TeamId: 1,
+						Minute: 25,
 					},
 					{
-						TeamId:               1,
-						Minute:               42,
+						TeamId: 1,
+						Minute: 42,
 					},
 					{
-						TeamId:               2,
-						Minute:               85,
+						TeamId: 2,
+						Minute: 85,
 					},
 					{
-						TeamId:               2,
-						Minute:               89,
+						TeamId: 2,
+						Minute: 89,
 					},
 					{
-						TeamId:               1,
-						Minute:               95,
+						TeamId: 1,
+						Minute: 95,
 					},
 				},
 				[]*statistico.CardEvent{
 					{
-						TeamId:               2,
-						Type:                 "yellowcard",
-						PlayerId:             0,
-						Minute:               2,
+						TeamId:   2,
+						Type:     "yellowcard",
+						PlayerId: 0,
+						Minute:   2,
 					},
 				},
 				3.0,
@@ -223,32 +223,32 @@ func TestAdjustedGoals(t *testing.T) {
 				2,
 				[]*statistico.GoalEvent{
 					{
-						TeamId:               1,
-						Minute:               25,
+						TeamId: 1,
+						Minute: 25,
 					},
 					{
-						TeamId:               1,
-						Minute:               42,
+						TeamId: 1,
+						Minute: 42,
 					},
 					{
-						TeamId:               1,
-						Minute:               85,
+						TeamId: 1,
+						Minute: 85,
 					},
 					{
-						TeamId:               1,
-						Minute:               89,
+						TeamId: 1,
+						Minute: 89,
 					},
 					{
-						TeamId:               1,
-						Minute:               95,
+						TeamId: 1,
+						Minute: 95,
 					},
 				},
 				[]*statistico.CardEvent{
 					{
-						TeamId:               2,
-						Type:                 "redcard",
-						PlayerId:             0,
-						Minute:               2,
+						TeamId:   2,
+						Type:     "redcard",
+						PlayerId: 0,
+						Minute:   2,
 					},
 				},
 				2.08,

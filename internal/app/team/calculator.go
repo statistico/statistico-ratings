@@ -42,11 +42,11 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixtureID, seasonID uint64, a
 		TeamID:    rt.TeamID,
 		FixtureID: fixtureID,
 		SeasonID:  seasonID,
-		Attack:    Points{
+		Attack: Points{
 			Total:      rt.Attack.Total + attack,
 			Difference: attack,
 		},
-		Defence:   Points{
+		Defence: Points{
 			Total:      rt.Defence.Total - defence,
 			Difference: -defence,
 		},
