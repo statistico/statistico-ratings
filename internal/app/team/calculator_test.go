@@ -83,6 +83,8 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			t.Fatalf("Expected nil, got %s", err.Error())
 		}
 
+		events.AssertExpectations(t)
+
 		a := assert.New(t)
 
 		a.Equal(uint64(10), newHome.TeamID)
@@ -123,6 +125,8 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		if err == nil {
 			t.Fatal("Expected error, got nil")
 		}
+
+		events.AssertExpectations(t)
 
 		assert.Nil(t, newHome)
 		assert.Nil(t, newAway)
