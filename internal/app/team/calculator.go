@@ -32,7 +32,7 @@ func (r *ratingCalculator) ForFixture(ctx context.Context, f *statistico.Fixture
 	av := calculate.PointsValue(away.Attack.Total, home.Defence.Total, 20, ag)
 
 	newHome := r.applyRating(home, uint64(f.Id), f.Season.Id, hv, av)
-	newAway := r.applyRating(home, uint64(f.Id), f.Season.Id, hv, av)
+	newAway := r.applyRating(away, uint64(f.Id), f.Season.Id, av, hv)
 
 	return newHome, newAway, nil
 }
@@ -47,9 +47,16 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixtureID, seasonID uint64, a
 			Difference: attack,
 		},
 		Defence:   Points{
-			Total:      rt.Defence.Total - attack,
-			Difference: defence,
+			Total:      rt.Defence.Total - defence,
+			Difference: -defence,
 		},
 		Timestamp: r.clock.Now(),
+	}
+}
+
+func NewRatingCalculator(e statisticodata.EventClient, c clockwork.Clock) RatingCalculator {
+	return &ratingCalculator{
+		event: e,
+		clock: c,
 	}
 }
