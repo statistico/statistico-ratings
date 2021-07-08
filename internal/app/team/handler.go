@@ -14,34 +14,37 @@ type RatingHandler struct {
 	logger         *logrus.Logger
 }
 
-func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) error {
+func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) {
 	fixtures, err := r.fetcher.ByCompetition(ctx, competitionID, numSeasons)
 
 	if err != nil {
-		return err
+		r.logger.Error("error fetching fixtures in team rating handler")
+		return
 	}
 
-	return r.handleFixtures(ctx, fixtures)
+	r.handleFixtures(ctx, fixtures)
 }
 
-func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) error {
+func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
 	fixtures, err := r.fetcher.ByDate(ctx, time)
 
 	if err != nil {
-		return err
+		r.logger.Error("error fetching fixtures in team rating handler")
+		return
 	}
 
-	return r.handleFixtures(ctx, fixtures)
+	r.handleFixtures(ctx, fixtures)
 }
 
-func (r *RatingHandler) handleFixtures(ctx context.Context, f []*statistico.Fixture) error {
+func (r *RatingHandler) handleFixtures(ctx context.Context, f []*statistico.Fixture) {
 	for _, fix := range f {
 		err := r.processor.ByFixture(ctx, fix)
 
 		if err != nil {
-			return err
+			r.logger.Error("error processing fixtures in team rating handler")
+			return
 		}
 	}
 
-	return nil
+	return
 }

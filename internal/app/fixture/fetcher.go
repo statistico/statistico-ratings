@@ -18,8 +18,8 @@ type Fetcher struct {
 	clock          clockwork.Clock
 }
 
-func (f *Fetcher) ByCompetition(ctx context.Context, seasonID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
-	res, err := f.seasonClient.ByCompetitionID(ctx, seasonID, "name_desc")
+func (f *Fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
+	res, err := f.seasonClient.ByCompetitionID(ctx, competitionID, "name_desc")
 
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (f *Fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 
 		parsed := parseSeasons(res, 1)
 
-		if len(parsed) == 0 {
+		if len(parsed) != 1 {
 			return nil, fmt.Errorf("no seasons returned for competition %d", c)
 		}
 
