@@ -6,6 +6,8 @@ import (
 
 type Config struct {
 	Database
+	Sentry
+	StatisticoDataService
 }
 
 type Database struct {
@@ -15,6 +17,15 @@ type Database struct {
 	User     string
 	Password string
 	Name     string
+}
+
+type Sentry struct {
+	DSN string
+}
+
+type StatisticoDataService struct {
+	Host string
+	Port string
 }
 
 func BuildConfig() *Config {
@@ -29,5 +40,13 @@ func BuildConfig() *Config {
 		Name:     os.Getenv("DB_NAME"),
 	}
 
+	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}
+
+	config.StatisticoDataService = StatisticoDataService{
+		Host: os.Getenv("STATISTICO_DATA_SERVICE_HOST"),
+		Port: os.Getenv("STATISTICO_DATA_SERVICE_PORT"),
+	}
+
 	return &config
 }
+
