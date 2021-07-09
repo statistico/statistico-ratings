@@ -48,3 +48,11 @@ func (r *RatingHandler) handleFixtures(ctx context.Context, f []*statistico.Fixt
 
 	return
 }
+
+func NewHandler(f fixture.Fetcher, p RatingProcessor, l *logrus.Logger) RatingHandler {
+	return RatingHandler{
+		fetcher:   f,
+		processor: p,
+		logger:    l,
+	}
+}

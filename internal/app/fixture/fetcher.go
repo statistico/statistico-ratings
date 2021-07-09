@@ -7,18 +7,22 @@ import (
 	"github.com/jonboulle/clockwork"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
-	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
 	"time"
 )
 
-type Fetcher struct {
-	config         bootstrap.Config
+type Fetcher interface {
+	ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error)
+	ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error)
+}
+
+type fetcher struct {
+	competitions   []uint64
 	fixtureClient  statisticodata.FixtureClient
 	seasonClient   statisticodata.SeasonClient
 	clock          clockwork.Clock
 }
 
-func (f *Fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
+func (f *fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
 	res, err := f.seasonClient.ByCompetitionID(ctx, competitionID, "name_desc")
 
 	if err != nil {
@@ -34,11 +38,11 @@ func (f *Fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSe
 	return f.fixtureClient.Search(ctx, &req)
 }
 
-func (f *Fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error) {
+func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error) {
 	var seasons []uint64
 
-	for _, c := range f.config.SupportedCompetitions {
-		res, err := f.seasonClient.ByCompetitionID(ctx, c, "name_desc")
+	for _, competition := range f.competitions {
+		res, err := f.seasonClient.ByCompetitionID(ctx, competition, "name_desc")
 
 		if err != nil {
 			return nil, err
@@ -47,7 +51,7 @@ func (f *Fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 		parsed := parseSeasons(res, 1)
 
 		if len(parsed) != 1 {
-			return nil, fmt.Errorf("no seasons returned for competition %d", c)
+			return nil, fmt.Errorf("no seasons returned for competition %d", competition)
 		}
 
 		seasons = append(seasons, parsed[0])
@@ -77,4 +81,13 @@ func parseSeasons(s []*statistico.Season, num int8) []uint64 {
 	}
 
 	return seasons
+}
+
+func NewFetcher(c []uint64, f statisticodata.FixtureClient, s statisticodata.SeasonClient, cl clockwork.Clock) Fetcher {
+	return &fetcher{
+		competitions:  c,
+		fixtureClient: f,
+		seasonClient:  s,
+		clock:         cl,
+	}
 }
