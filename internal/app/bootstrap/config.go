@@ -8,6 +8,7 @@ type Config struct {
 	Database
 	Sentry
 	StatisticoDataService
+	SupportedCompetitions []uint64
 }
 
 type Database struct {
@@ -46,6 +47,8 @@ func BuildConfig() *Config {
 		Host: os.Getenv("STATISTICO_DATA_SERVICE_HOST"),
 		Port: os.Getenv("STATISTICO_DATA_SERVICE_PORT"),
 	}
+
+	config.SupportedCompetitions = []uint64{8}
 
 	return &config
 }

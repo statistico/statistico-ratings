@@ -6,6 +6,10 @@ func (c Container) TeamRatingCalculator() team.RatingCalculator {
 	return team.NewRatingCalculator(c.DataEventClient(), c.Clock)
 }
 
+func (c Container) TeamRatingHandler() team.RatingHandler {
+	return team.NewHandler(c.FixtureFetcher(), c.TeamRatingProcessor(), c.Logger)
+}
+
 func (c Container) TeamRatingProcessor() team.RatingProcessor {
 	return team.NewRatingProcessor(
 		c.TeamRatingReader(),
