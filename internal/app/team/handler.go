@@ -3,7 +3,6 @@ package team
 import (
 	"context"
 	"github.com/sirupsen/logrus"
-	"github.com/statistico/statistico-proto/go"
 	"github.com/statistico/statistico-ratings/internal/app/fixture"
 	"time"
 )
@@ -50,19 +49,6 @@ func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
 			continue
 		}
 	}
-}
-
-func (r *RatingHandler) handleFixtures(ctx context.Context, f []*statistico.Fixture) {
-	for _, fix := range f {
-		err := r.processor.ByFixture(ctx, fix)
-
-		if err != nil {
-			r.logger.Error("error processing fixtures in team rating handler")
-			return
-		}
-	}
-
-	return
 }
 
 func NewHandler(f fixture.Fetcher, p RatingProcessor, l *logrus.Logger) RatingHandler {
