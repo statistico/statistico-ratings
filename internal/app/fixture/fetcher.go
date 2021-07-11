@@ -58,8 +58,8 @@ func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 	}
 
 	year, month, day := date.Date()
-	start := time.Date(year, month, day, 0, 0, 0, 0, nil)
-	end := time.Date(year, month, day, 23, 59, 59, 0, nil)
+	start := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
+	end := time.Date(year, month, day, 23, 59, 59, 0, time.UTC)
 
 	req := statistico.FixtureSearchRequest{
 		SeasonIds:            seasons,
