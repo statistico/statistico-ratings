@@ -22,7 +22,16 @@ func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64,
 		return
 	}
 
-	r.handleFixtures(ctx, fixtures)
+	for _, fix := range fixtures {
+		err := r.processor.ByFixture(ctx, fix)
+
+		if err != nil {
+			r.logger.Error("error processing fixtures in team rating handler")
+			return
+		}
+	}
+
+	return
 }
 
 func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
@@ -33,7 +42,14 @@ func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
 		return
 	}
 
-	r.handleFixtures(ctx, fixtures)
+	for _, fix := range fixtures {
+		err := r.processor.ByFixture(ctx, fix)
+
+		if err != nil {
+			r.logger.Error("error processing fixtures in team rating handler")
+			continue
+		}
+	}
 }
 
 func (r *RatingHandler) handleFixtures(ctx context.Context, f []*statistico.Fixture) {
