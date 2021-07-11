@@ -72,7 +72,7 @@ func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 }
 
 func parseSeasons(s []*statistico.Season, num int8) []uint64 {
-	x := s[num:]
+	x := s[len(s)-int(num):]
 
 	var seasons []uint64
 
