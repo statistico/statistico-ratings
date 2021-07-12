@@ -15,3 +15,10 @@ type Points struct {
 	Total      float64
 	Difference float64
 }
+
+type ReaderQuery struct {
+	TeamID  *uint64
+	SeasonID  *uint64
+	Before   *time.Time
+	Sort     string
+}

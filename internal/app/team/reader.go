@@ -9,6 +9,7 @@ import (
 
 type RatingReader interface {
 	Latest(teamID uint64) (*Rating, error)
+	Get(q *ReaderQuery) ([]*Rating, error)
 }
 
 type ratingReader struct {
@@ -56,6 +57,12 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 	rating.Timestamp = time.Unix(timestamp, 0)
 
 	return &rating, nil
+}
+
+func (r *ratingReader) Get(q *ReaderQuery) ([]*Rating, error) {
+	ratings := []*Rating{}
+
+	return ratings, nil
 }
 
 func NewRatingReader(c *sql.DB) RatingReader {
