@@ -66,7 +66,7 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		handler.ByCompetition(ctx, uint64(8), int8(4))
 
-		assert.Equal(t, "error fetching fixtures in team rating handler", hook.LastEntry().Message)
+		assert.Equal(t, "error fetching fixtures in team rating handler: fixture fetcher error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 		fetcher.AssertExpectations(t)
 	})
@@ -103,7 +103,7 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		handler.ByCompetition(ctx, uint64(8), int8(4))
 
-		assert.Equal(t, "error processing fixtures in team rating handler", hook.LastEntry().Message)
+		assert.Equal(t, "error processing fixtures in team rating handler: team rating processing error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 		fetcher.AssertExpectations(t)
 		processor.AssertExpectations(t)
@@ -165,7 +165,7 @@ func TestRatingHandler_ByDate(t *testing.T) {
 
 		handler.ByDate(ctx, date)
 
-		assert.Equal(t, "error fetching fixtures in team rating handler", hook.LastEntry().Message)
+		assert.Equal(t, "error fetching fixtures in team rating handler: fixture fetcher error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 		fetcher.AssertExpectations(t)
 	})
@@ -202,7 +202,7 @@ func TestRatingHandler_ByDate(t *testing.T) {
 
 		handler.ByDate(ctx, date)
 
-		assert.Equal(t, "error processing fixtures in team rating handler", hook.LastEntry().Message)
+		assert.Equal(t, "error processing fixtures in team rating handler: team rating processing error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 		fetcher.AssertExpectations(t)
 		processor.AssertExpectations(t)

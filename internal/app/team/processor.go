@@ -3,6 +3,7 @@ package team
 import (
 	"context"
 	"github.com/statistico/statistico-proto/go"
+	"github.com/statistico/statistico-ratings/internal/app"
 )
 
 type RatingProcessor interface {
@@ -16,13 +17,13 @@ type ratingProcessor struct {
 }
 
 func (r *ratingProcessor) ByFixture(ctx context.Context, f *statistico.Fixture) error {
-	home, err := r.reader.Latest(f.HomeTeam.Id)
+	home, err := r.fetchRating(f.HomeTeam.Id)
 
 	if err != nil {
 		return err
 	}
 
-	away, err := r.reader.Latest(f.AwayTeam.Id)
+	away, err := r.fetchRating(f.AwayTeam.Id)
 
 	if err != nil {
 		return err
@@ -47,6 +48,29 @@ func (r *ratingProcessor) ByFixture(ctx context.Context, f *statistico.Fixture) 
 	}
 
 	return nil
+}
+
+func (r *ratingProcessor) fetchRating(teamID uint64) (*Rating, error) {
+	rating, err := r.reader.Latest(teamID)
+
+	switch err.(type) {
+	case *app.NotFoundError:
+		return &Rating{
+			TeamID:    teamID,
+			Attack:    Points{
+				Total:      1500,
+				Difference: 0,
+			},
+			Defence:   Points{
+				Total:      1500,
+				Difference: 0,
+			},
+		}, nil
+	case nil:
+		return rating, nil
+	default:
+		return nil, err
+	}
 }
 
 func NewRatingProcessor(r RatingReader, w RatingWriter, c RatingCalculator) RatingProcessor {

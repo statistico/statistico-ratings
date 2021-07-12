@@ -28,6 +28,7 @@ services:
     links:
       - postgres
     networks:
+      - statistico_internal
       - statistico-ratings_default
 
   migrate:
