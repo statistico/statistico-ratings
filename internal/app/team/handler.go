@@ -17,7 +17,7 @@ func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64,
 	fixtures, err := r.fetcher.ByCompetition(ctx, competitionID, numSeasons)
 
 	if err != nil {
-		r.logger.Error("error fetching fixtures in team rating handler")
+		r.logger.Errorf("error fetching fixtures in team rating handler: %s", err.Error())
 		return
 	}
 
@@ -25,7 +25,7 @@ func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64,
 		err := r.processor.ByFixture(ctx, fix)
 
 		if err != nil {
-			r.logger.Error("error processing fixtures in team rating handler")
+			r.logger.Errorf("error processing fixtures in team rating handler: %s", err.Error())
 			return
 		}
 	}
