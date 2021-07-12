@@ -37,7 +37,7 @@ func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
 	fixtures, err := r.fetcher.ByDate(ctx, time)
 
 	if err != nil {
-		r.logger.Error("error fetching fixtures in team rating handler")
+		r.logger.Errorf("error fetching fixtures in team rating handler: %s", err.Error())
 		return
 	}
 
@@ -45,7 +45,7 @@ func (r *RatingHandler) ByDate(ctx context.Context, time time.Time) {
 		err := r.processor.ByFixture(ctx, fix)
 
 		if err != nil {
-			r.logger.Error("error processing fixtures in team rating handler")
+			r.logger.Errorf("error processing fixtures in team rating handler: %s", err.Error())
 			continue
 		}
 	}
