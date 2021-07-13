@@ -12,8 +12,8 @@ import (
 
 func TestRatingProcessor_ByFixture(t *testing.T) {
 	fixture := statistico.Fixture{
-		HomeTeam:             &statistico.Team{Id: 5},
-		AwayTeam:             &statistico.Team{Id: 6},
+		HomeTeam: &statistico.Team{Id: 5},
+		AwayTeam: &statistico.Team{Id: 6},
 	}
 
 	ctx := context.Background()

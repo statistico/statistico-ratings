@@ -8,9 +8,9 @@ import (
 )
 
 type RatingHandler struct {
-	fetcher        fixture.Fetcher
-	processor      RatingProcessor
-	logger         *logrus.Logger
+	fetcher   fixture.Fetcher
+	processor RatingProcessor
+	logger    *logrus.Logger
 }
 
 func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) {

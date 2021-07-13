@@ -11,7 +11,7 @@ import (
 )
 
 type Container struct {
-	Clock            clockwork.Clock
+	Clock    clockwork.Clock
 	Config   *Config
 	Database *sql.DB
 	Logger   *logrus.Logger

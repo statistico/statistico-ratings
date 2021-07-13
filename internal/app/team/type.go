@@ -17,8 +17,8 @@ type Points struct {
 }
 
 type ReaderQuery struct {
-	TeamID  *uint64
-	SeasonID  *uint64
+	TeamID   *uint64
+	SeasonID *uint64
 	Before   *time.Time
 	Sort     string
 }

@@ -221,15 +221,15 @@ func TestFetcher_ByDate(t *testing.T) {
 func seasonResponse() []*statistico.Season {
 	return []*statistico.Season{
 		{
-			Id: 1,
+			Id:   1,
 			Name: "2018/2019",
 		},
 		{
-			Id: 2,
+			Id:   2,
 			Name: "2019/2020",
 		},
 		{
-			Id: 3,
+			Id:   3,
 			Name: "2020/2021",
 		},
 	}
@@ -238,19 +238,19 @@ func seasonResponse() []*statistico.Season {
 func fixtureResponse() []*statistico.Fixture {
 	return []*statistico.Fixture{
 		{
-			Id: 1,
+			Id:          1,
 			Competition: &statistico.Competition{Id: 100},
 		},
 		{
-			Id: 2,
+			Id:          2,
 			Competition: &statistico.Competition{Id: 8},
 		},
 		{
-			Id: 3,
+			Id:          3,
 			Competition: &statistico.Competition{Id: 9},
 		},
 		{
-			Id: 4,
+			Id:          4,
 			Competition: &statistico.Competition{Id: 200},
 		},
 	}

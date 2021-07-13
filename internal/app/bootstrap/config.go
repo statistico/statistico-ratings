@@ -52,4 +52,3 @@ func BuildConfig() *Config {
 
 	return &config
 }
-

@@ -11,8 +11,8 @@ type RatingProcessor interface {
 }
 
 type ratingProcessor struct {
-	reader RatingReader
-	writer RatingWriter
+	reader     RatingReader
+	writer     RatingWriter
 	calculator RatingCalculator
 }
 
@@ -56,12 +56,12 @@ func (r *ratingProcessor) fetchRating(teamID uint64) (*Rating, error) {
 	switch err.(type) {
 	case *app.NotFoundError:
 		return &Rating{
-			TeamID:    teamID,
-			Attack:    Points{
+			TeamID: teamID,
+			Attack: Points{
 				Total:      1500,
 				Difference: 0,
 			},
-			Defence:   Points{
+			Defence: Points{
 				Total:      1500,
 				Difference: 0,
 			},
