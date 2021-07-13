@@ -15,10 +15,10 @@ type Fetcher interface {
 }
 
 type fetcher struct {
-	competitions   []uint64
-	fixtureClient  statisticodata.FixtureClient
-	seasonClient   statisticodata.SeasonClient
-	clock          clockwork.Clock
+	competitions  []uint64
+	fixtureClient statisticodata.FixtureClient
+	seasonClient  statisticodata.SeasonClient
+	clock         clockwork.Clock
 }
 
 func (f *fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
@@ -29,9 +29,9 @@ func (f *fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSe
 	}
 
 	req := statistico.FixtureSearchRequest{
-		SeasonIds:            parseSeasons(res, numSeasons),
-		DateBefore:           &wrappers.StringValue{Value: f.clock.Now().Format(time.RFC3339)},
-		Sort:                 &wrappers.StringValue{Value: "date_asc"},
+		SeasonIds:  parseSeasons(res, numSeasons),
+		DateBefore: &wrappers.StringValue{Value: f.clock.Now().Format(time.RFC3339)},
+		Sort:       &wrappers.StringValue{Value: "date_asc"},
 	}
 
 	return f.fixtureClient.Search(ctx, &req)
@@ -43,9 +43,9 @@ func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 	end := time.Date(year, month, day, 23, 59, 59, 0, time.UTC)
 
 	request := statistico.FixtureSearchRequest{
-		DateAfter:            &wrappers.StringValue{Value: start.Format(time.RFC3339)},
-		DateBefore:           &wrappers.StringValue{Value: end.Format(time.RFC3339)},
-		Sort:                 &wrappers.StringValue{Value: "date_asc"},
+		DateAfter:  &wrappers.StringValue{Value: start.Format(time.RFC3339)},
+		DateBefore: &wrappers.StringValue{Value: end.Format(time.RFC3339)},
+		Sort:       &wrappers.StringValue{Value: "date_asc"},
 	}
 
 	response, err := f.fixtureClient.Search(ctx, &request)

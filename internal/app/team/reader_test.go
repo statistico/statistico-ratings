@@ -123,8 +123,8 @@ func TestRatingReader_Get(t *testing.T) {
 		date := time.Unix(1625162423, 0)
 
 		s := []struct {
-			Query  *team.ReaderQuery
-			Count  int
+			Query *team.ReaderQuery
+			Count int
 		}{
 			{
 				&team.ReaderQuery{TeamID: &team1},
@@ -139,8 +139,8 @@ func TestRatingReader_Get(t *testing.T) {
 			},
 			{
 				&team.ReaderQuery{
-					TeamID:   &team2,
-					Before:   &date,
+					TeamID: &team2,
+					Before: &date,
 				},
 				1,
 			},
@@ -168,8 +168,8 @@ func TestRatingReader_Get(t *testing.T) {
 		teamID := uint64(1)
 
 		query := team.ReaderQuery{
-			TeamID:   &teamID,
-			Sort:     "timestamp_desc",
+			TeamID: &teamID,
+			Sort:   "timestamp_desc",
 		}
 
 		ratings, err := reader.Get(&query)
