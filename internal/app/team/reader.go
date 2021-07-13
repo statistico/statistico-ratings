@@ -62,7 +62,18 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 func (r *ratingReader) Get(q *ReaderQuery) ([]*Rating, error) {
 	b := queryBuilder(r.connection)
 
-	query := b.Select("*").From("team_rating")
+	query := b.
+		Select(
+			"team_id",
+			"fixture_id",
+			"season_id",
+			"attack_total",
+			"attack_points",
+			"defence_total",
+			"defence_points",
+			"timestamp",
+		).
+		From("team_rating")
 
 	rows, err := buildQuery(query, q).Query()
 
