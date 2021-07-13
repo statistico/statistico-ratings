@@ -157,6 +157,11 @@ func (m *MockRatingReader) Latest(teamID uint64) (*team.Rating, error) {
 	return args.Get(0).(*team.Rating), args.Error(1)
 }
 
+func (m *MockRatingReader) Get(q *team.ReaderQuery) ([]*team.Rating, error) {
+	args := m.Called(q)
+	return args.Get(0).([]*team.Rating), args.Error(1)
+}
+
 type MockRatingWriter struct {
 	mock.Mock
 }
