@@ -27,7 +27,7 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 	ratings, err := t.reader.Get(q)
 
 	if err != nil {
-		t.logger.Error("Error fetching team ratings: %s", err.Error())
+		t.logger.Errorf("Error fetching team ratings: %s", err.Error())
 		return nil, status.Error(codes.Internal, "internal server error")
 	}
 
@@ -35,18 +35,18 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 
 	for _, rt := range ratings {
 		st := statistico.TeamRating{
-			TeamId:               rt.TeamID,
-			FixtureId:            rt.FixtureID,
-			SeasonId:             rt.SeasonID,
-			Attack:               &statistico.Points{
-				Points:               float32(rt.Attack.Total),
-				Difference:           float32(rt.Attack.Difference),
+			TeamId:    rt.TeamID,
+			FixtureId: rt.FixtureID,
+			SeasonId:  rt.SeasonID,
+			Attack: &statistico.Points{
+				Points:     float32(rt.Attack.Total),
+				Difference: float32(rt.Attack.Difference),
 			},
-			Defence:              &statistico.Points{
-				Points:               float32(rt.Defence.Total),
-				Difference:           float32(rt.Defence.Difference),
+			Defence: &statistico.Points{
+				Points:     float32(rt.Defence.Total),
+				Difference: float32(rt.Defence.Difference),
 			},
-			Timestamp:            timestamppb.New(rt.Timestamp),
+			Timestamp: timestamppb.New(rt.Timestamp),
 		}
 
 		res.Ratings = append(res.Ratings, &st)
@@ -57,8 +57,8 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 
 func buildTeamReaderQuery(r *statistico.TeamRatingRequest) (*team.ReaderQuery, error) {
 	q := team.ReaderQuery{
-		TeamID:   &r.TeamId,
-		Sort:     r.Sort,
+		TeamID: &r.TeamId,
+		Sort:   r.Sort,
 	}
 
 	if r.SeasonId != nil {
@@ -76,4 +76,8 @@ func buildTeamReaderQuery(r *statistico.TeamRatingRequest) (*team.ReaderQuery, e
 	}
 
 	return &q, nil
+}
+
+func NewTeamRatingService(r team.RatingReader, l *logrus.Logger) TeamRatingService {
+	return TeamRatingService{reader: r, logger: l}
 }
