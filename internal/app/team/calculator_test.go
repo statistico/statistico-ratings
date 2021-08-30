@@ -17,7 +17,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 	fixture := statistico.Fixture{
 		Id: 26,
 		Competition: &statistico.Competition{
-			Id:                   8,
+			Id: 8,
 		},
 		Season: &statistico.Season{
 			Id: 17462,
@@ -44,7 +44,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			Difference: -4,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
-		Timestamp: time.Now(),
+		Timestamp:   time.Now(),
 	}
 
 	away := team.Rating{
@@ -60,7 +60,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			Difference: -14,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
-		Timestamp: time.Now(),
+		Timestamp:   time.Now(),
 	}
 
 	t.Run("calculates new team ratings for a fixture", func(t *testing.T) {

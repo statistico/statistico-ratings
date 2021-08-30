@@ -45,7 +45,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 					Difference: -23,
 				},
 				FixtureDate: time.Unix(1627226510, 0),
-				Timestamp: time.Unix(1627226510, 0),
+				Timestamp:   time.Unix(1627226510, 0),
 			},
 			{
 				TeamID:    5,
@@ -60,7 +60,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 					Difference: -3,
 				},
 				FixtureDate: time.Unix(1627226510, 0),
-				Timestamp: time.Unix(1627226510, 0),
+				Timestamp:   time.Unix(1627226510, 0),
 			},
 		}
 

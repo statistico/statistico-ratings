@@ -12,9 +12,9 @@ type RatingProcessor interface {
 }
 
 type ratingProcessor struct {
-	reader     RatingReader
-	writer     RatingWriter
-	calculator RatingCalculator
+	reader             RatingReader
+	writer             RatingWriter
+	calculator         RatingCalculator
 	competitionMapping map[uint64]uint16
 }
 
@@ -93,9 +93,9 @@ func (r *ratingProcessor) parseCompetitionScore(competitionID uint64) (uint16, e
 
 func NewRatingProcessor(r RatingReader, w RatingWriter, c RatingCalculator, comp map[uint64]uint16) RatingProcessor {
 	return &ratingProcessor{
-		reader:     r,
-		writer:     w,
-		calculator: c,
+		reader:             r,
+		writer:             w,
+		calculator:         c,
 		competitionMapping: comp,
 	}
 }
