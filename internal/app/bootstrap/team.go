@@ -6,7 +6,6 @@ func (c Container) TeamRatingCalculator() team.RatingCalculator {
 	return team.NewRatingCalculator(
 		c.DataEventClient(),
 		c.Config.KFactorMapping,
-		c.Config.CompetitionScoreMapping,
 		c.Clock,
 	)
 }
@@ -20,6 +19,7 @@ func (c Container) TeamRatingProcessor() team.RatingProcessor {
 		c.TeamRatingReader(),
 		c.TeamRatingWriter(),
 		c.TeamRatingCalculator(),
+		c.Config.CompetitionScoreMapping,
 	)
 }
 

@@ -19,7 +19,6 @@ type RatingCalculator interface {
 type ratingCalculator struct {
 	event statisticodata.EventClient
 	kFactorMapping map[uint64]uint8
-	competitionMapping map[uint64]uint16
 	clock clockwork.Clock
 }
 
@@ -75,11 +74,10 @@ func (r *ratingCalculator) parseKFactor(f *statistico.Fixture) (uint8, error) {
 	return 0, fmt.Errorf("competition %d is not supported", f.Competition.Id)
 }
 
-func NewRatingCalculator(e statisticodata.EventClient, k map[uint64]uint8, comp map[uint64]uint16, c clockwork.Clock) RatingCalculator {
+func NewRatingCalculator(e statisticodata.EventClient, k map[uint64]uint8, c clockwork.Clock) RatingCalculator {
 	return &ratingCalculator{
 		event: e,
 		kFactorMapping: k,
-		competitionMapping: comp,
 		clock: c,
 	}
 }

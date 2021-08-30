@@ -70,7 +70,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		config := bootstrap.BuildConfig()
 		clock := clockwork.NewFakeClock()
 
-		calculator := team.NewRatingCalculator(events, config.KFactorMapping, config.CompetitionScoreMapping, clock)
+		calculator := team.NewRatingCalculator(events, config.KFactorMapping, clock)
 
 		ctx := context.Background()
 
@@ -123,7 +123,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		config := bootstrap.BuildConfig()
 		clock := clockwork.NewFakeClock()
 
-		calculator := team.NewRatingCalculator(events, config.KFactorMapping, config.CompetitionScoreMapping, clock)
+		calculator := team.NewRatingCalculator(events, config.KFactorMapping, clock)
 
 		ctx := context.Background()
 
