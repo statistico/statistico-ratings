@@ -33,7 +33,10 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 
 	res := statistico.TeamRatingResponse{}
 
+	t.logger.Errorf("Total ratings: %+v", len(ratings))
+
 	for _, rt := range ratings {
+		t.logger.Errorf("Attack points: %+v", rt.Attack.Total)
 		st := statistico.TeamRating{
 			TeamId:    rt.TeamID,
 			FixtureId: rt.FixtureID,
@@ -78,6 +81,6 @@ func buildTeamReaderQuery(r *statistico.TeamRatingRequest) (*team.ReaderQuery, e
 	return &q, nil
 }
 
-func NewTeamRatingService(r team.RatingReader, l *logrus.Logger) TeamRatingService {
-	return TeamRatingService{reader: r, logger: l}
+func NewTeamRatingService(r team.RatingReader, l *logrus.Logger) *TeamRatingService {
+	return &TeamRatingService{reader: r, logger: l}
 }
