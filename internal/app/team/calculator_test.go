@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/jonboulle/clockwork"
 	"github.com/statistico/statistico-proto/go"
+	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
 	"github.com/statistico/statistico-ratings/internal/app/team"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -15,6 +16,9 @@ import (
 func TestRatingCalculator_ForFixture(t *testing.T) {
 	fixture := statistico.Fixture{
 		Id: 26,
+		Competition: &statistico.Competition{
+			Id:                   8,
+		},
 		Season: &statistico.Season{
 			Id: 17462,
 		},
@@ -63,9 +67,10 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		t.Helper()
 
 		events := new(MockEventClient)
+		config := bootstrap.BuildConfig()
 		clock := clockwork.NewFakeClock()
 
-		calculator := team.NewRatingCalculator(events, clock)
+		calculator := team.NewRatingCalculator(events, config.KFactorMapping, clock)
 
 		ctx := context.Background()
 
@@ -115,9 +120,10 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		t.Helper()
 
 		events := new(MockEventClient)
+		config := bootstrap.BuildConfig()
 		clock := clockwork.NewFakeClock()
 
-		calculator := team.NewRatingCalculator(events, clock)
+		calculator := team.NewRatingCalculator(events, config.KFactorMapping, clock)
 
 		ctx := context.Background()
 

@@ -8,7 +8,7 @@ import (
 // PointsValue calculates the value for the attack vs defence scenario using
 // an ELO based calculation. k argument relates to the k factor used with elo
 // calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
-func PointsValue(attack, defence float64, k int8, goals float64) float64 {
+func PointsValue(attack, defence float64, k uint8, goals float64) float64 {
 	ge := GoalExpectancy(attack, defence)
 	val := (float64(k) * adjustGoals(goals)) * (goals - ge)
 	return float64(int(val*100)) / 100

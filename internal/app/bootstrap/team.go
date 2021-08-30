@@ -3,7 +3,11 @@ package bootstrap
 import "github.com/statistico/statistico-ratings/internal/app/team"
 
 func (c Container) TeamRatingCalculator() team.RatingCalculator {
-	return team.NewRatingCalculator(c.DataEventClient(), c.Clock)
+	return team.NewRatingCalculator(
+		c.DataEventClient(),
+		c.Config.KFactorMapping,
+		c.Clock,
+	)
 }
 
 func (c Container) TeamRatingHandler() team.RatingHandler {
@@ -15,6 +19,7 @@ func (c Container) TeamRatingProcessor() team.RatingProcessor {
 		c.TeamRatingReader(),
 		c.TeamRatingWriter(),
 		c.TeamRatingCalculator(),
+		c.Config.CompetitionScoreMapping,
 	)
 }
 
