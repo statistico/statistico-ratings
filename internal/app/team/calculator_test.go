@@ -15,6 +15,9 @@ import (
 func TestRatingCalculator_ForFixture(t *testing.T) {
 	fixture := statistico.Fixture{
 		Id: 26,
+		Competition: &statistico.Competition{
+			Id:                   8,
+		},
 		Season: &statistico.Season{
 			Id: 17462,
 		},
