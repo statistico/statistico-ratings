@@ -14,7 +14,7 @@ func TestPointsValue(t *testing.T) {
 		s := []struct {
 			Attack  float64
 			Defence float64
-			K       int8
+			K       uint8
 			G       float64
 			Value   float64
 		}{

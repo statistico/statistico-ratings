@@ -6,7 +6,6 @@ import (
 	"github.com/jonboulle/clockwork"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
-	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
 	"github.com/statistico/statistico-ratings/internal/app/calculate"
 	"time"
 )
@@ -19,7 +18,8 @@ type RatingCalculator interface {
 
 type ratingCalculator struct {
 	event statisticodata.EventClient
-	config bootstrap.Config
+	kFactorMapping map[uint64]uint8
+	competitionMapping map[uint64]uint16
 	clock clockwork.Clock
 }
 
@@ -66,7 +66,7 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixture *statistico.Fixture, 
 }
 
 func (r *ratingCalculator) parseKFactor(f *statistico.Fixture) (uint8, error) {
-	for competition, factor := range r.config.KFactorMapping {
+	for competition, factor := range r.kFactorMapping {
 		if competition == f.Competition.Id {
 			return factor, nil
 		}
@@ -75,9 +75,11 @@ func (r *ratingCalculator) parseKFactor(f *statistico.Fixture) (uint8, error) {
 	return 0, fmt.Errorf("competition %d is not supported", f.Competition.Id)
 }
 
-func NewRatingCalculator(e statisticodata.EventClient, c clockwork.Clock) RatingCalculator {
+func NewRatingCalculator(e statisticodata.EventClient, k map[uint64]uint8, comp map[uint64]uint16, c clockwork.Clock) RatingCalculator {
 	return &ratingCalculator{
 		event: e,
+		kFactorMapping: k,
+		competitionMapping: comp,
 		clock: c,
 	}
 }
