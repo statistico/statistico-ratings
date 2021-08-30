@@ -108,6 +108,8 @@ func rowsToRatingSlice(rows *sql.Rows) ([]*Rating, error) {
 			return ratings, err
 		}
 
+		rating.Attack = attack
+		rating.Defence = defence
 		rating.Timestamp = time.Unix(timestamp, 0)
 
 		ratings = append(ratings, &rating)

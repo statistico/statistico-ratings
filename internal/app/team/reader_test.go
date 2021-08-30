@@ -124,10 +124,55 @@ func TestRatingReader_Get(t *testing.T) {
 
 		s := []struct {
 			Query *team.ReaderQuery
+			Ratings []*team.Rating
 			Count int
 		}{
 			{
 				&team.ReaderQuery{TeamID: &team1},
+				[]*team.Rating{
+					{
+						TeamID:    1,
+						FixtureID: 65,
+						SeasonID:  9,
+						Attack: team.Points{
+							Total:      1728,
+							Difference: -3,
+						},
+						Defence: team.Points{
+							Total:      1241,
+							Difference: 4,
+						},
+						Timestamp: time.Unix(1625162423, 0),
+					},
+					{
+						TeamID:    1,
+						FixtureID: 66,
+						SeasonID:  9,
+						Attack: team.Points{
+							Total:      1728,
+							Difference: -3,
+						},
+						Defence: team.Points{
+							Total:      1241,
+							Difference: 4,
+						},
+						Timestamp: time.Unix(1625163423, 0),
+					},
+					{
+						TeamID:    1,
+						FixtureID: 67,
+						SeasonID:  9,
+						Attack: team.Points{
+							Total:      1728,
+							Difference: -3,
+						},
+						Defence: team.Points{
+							Total:      1241,
+							Difference: 4,
+						},
+						Timestamp: time.Unix(1625164423, 0),
+					},
+				},
 				3,
 			},
 			{
@@ -135,12 +180,44 @@ func TestRatingReader_Get(t *testing.T) {
 					TeamID:   &team2,
 					SeasonID: &season,
 				},
+				[]*team.Rating{
+					{
+						TeamID:    2,
+						FixtureID: 70,
+						SeasonID:  10,
+						Attack: team.Points{
+							Total:      1728,
+							Difference: -3,
+						},
+						Defence: team.Points{
+							Total:      1241,
+							Difference: 4,
+						},
+						Timestamp: time.Unix(1625172423, 0),
+					},
+				},
 				1,
 			},
 			{
 				&team.ReaderQuery{
 					TeamID: &team2,
 					Before: &date,
+				},
+				[]*team.Rating{
+					{
+						TeamID:    2,
+						FixtureID: 66,
+						SeasonID:  9,
+						Attack: team.Points{
+							Total:      1728,
+							Difference: -3,
+						},
+						Defence: team.Points{
+							Total:      1241,
+							Difference: 4,
+						},
+						Timestamp: time.Unix(1625162423, 0),
+					},
 				},
 				1,
 			},
@@ -156,6 +233,7 @@ func TestRatingReader_Get(t *testing.T) {
 			}
 
 			assert.Equal(t, st.Count, len(ratings))
+			assert.Equal(t, st.Ratings, ratings)
 		}
 	})
 
