@@ -60,7 +60,7 @@ func BuildConfig() *Config {
 		12: 1400,
 		14: 1350,
 	}
-	
+
 	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}
 
 	config.StatisticoDataService = StatisticoDataService{
