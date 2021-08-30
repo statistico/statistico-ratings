@@ -33,6 +33,7 @@ func TestRatingRepository_Insert(t *testing.T) {
 						Total:      1241,
 						Difference: 4,
 					},
+					FixtureDate: time.Unix(1630343736, 0),
 					Timestamp: time.Now(),
 				},
 				1,
@@ -50,6 +51,7 @@ func TestRatingRepository_Insert(t *testing.T) {
 						Total:      1023,
 						Difference: 2,
 					},
+					FixtureDate: time.Unix(1630243736, 0),
 					Timestamp: time.Now(),
 				},
 				2,
@@ -67,6 +69,7 @@ func TestRatingRepository_Insert(t *testing.T) {
 						Total:      1100,
 						Difference: -25,
 					},
+					FixtureDate: time.Unix(1630143736, 0),
 					Timestamp: time.Now(),
 				},
 				3,
@@ -106,6 +109,7 @@ func TestRatingRepository_Insert(t *testing.T) {
 				Total:      1100,
 				Difference: -25,
 			},
+			FixtureDate: time.Now(),
 			Timestamp: time.Now(),
 		}
 

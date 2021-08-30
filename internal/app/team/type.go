@@ -8,6 +8,7 @@ type Rating struct {
 	SeasonID  uint64
 	Attack    Points
 	Defence   Points
+	FixtureDate time.Time
 	Timestamp time.Time
 }
 

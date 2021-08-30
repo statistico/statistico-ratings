@@ -24,6 +24,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		AwayTeam: &statistico.Team{
 			Id: 12,
 		},
+		DateTime: &statistico.Date{Utc: 1630343736},
 	}
 
 	home := team.Rating{
@@ -38,6 +39,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			Total:      1542.45,
 			Difference: -4,
 		},
+		FixtureDate: time.Unix(1630343736, 0),
 		Timestamp: time.Now(),
 	}
 
@@ -53,6 +55,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			Total:      1642.45,
 			Difference: -14,
 		},
+		FixtureDate: time.Unix(1630343736, 0),
 		Timestamp: time.Now(),
 	}
 
@@ -94,6 +97,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		a.Equal(9.39, newHome.Attack.Difference)
 		a.Equal(1559.65, newHome.Defence.Total)
 		a.Equal(17.20, newHome.Defence.Difference)
+		a.Equal(time.Unix(1630343736, 0), newHome.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 
 		a.Equal(uint64(12), newAway.TeamID)
@@ -103,6 +107,7 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		a.Equal(-17.20, newAway.Attack.Difference)
 		a.Equal(1633.06, newAway.Defence.Total)
 		a.Equal(-9.39, newAway.Defence.Difference)
+		a.Equal(time.Unix(1630343736, 0), newAway.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 	})
 

@@ -49,6 +49,7 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 				Points:     float32(rt.Defence.Total),
 				Difference: float32(rt.Defence.Difference),
 			},
+			FixtureDate: timestamppb.New(rt.FixtureDate),
 			Timestamp: timestamppb.New(rt.Timestamp),
 		}
 

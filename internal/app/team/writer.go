@@ -52,6 +52,7 @@ func (r *ratingWriter) Insert(x *Rating) error {
 			"attack_points",
 			"defence_total",
 			"defence_points",
+			"fixture_date",
 			"timestamp").
 		Values(
 			x.TeamID,
@@ -61,6 +62,7 @@ func (r *ratingWriter) Insert(x *Rating) error {
 			x.Attack.Difference,
 			x.Defence.Total,
 			x.Defence.Difference,
+			x.FixtureDate.Unix(),
 			x.Timestamp.Unix(),
 		).
 		Exec()
