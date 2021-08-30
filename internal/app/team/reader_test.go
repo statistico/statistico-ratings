@@ -34,7 +34,7 @@ func TestRatingReader_Latest(t *testing.T) {
 						Difference: 4,
 					},
 					FixtureDate: time.Unix(1625169423, 0),
-					Timestamp: time.Unix(1625169423, 0),
+					Timestamp:   time.Unix(1625169423, 0),
 				},
 			},
 			{
@@ -51,7 +51,7 @@ func TestRatingReader_Latest(t *testing.T) {
 						Difference: 2,
 					},
 					FixtureDate: time.Unix(1624169423, 0),
-					Timestamp: time.Unix(1624169423, 0),
+					Timestamp:   time.Unix(1624169423, 0),
 				},
 			},
 			{
@@ -68,7 +68,7 @@ func TestRatingReader_Latest(t *testing.T) {
 						Difference: -25,
 					},
 					FixtureDate: time.Unix(1622169423, 0),
-					Timestamp: time.Unix(1622169423, 0),
+					Timestamp:   time.Unix(1622169423, 0),
 				},
 			},
 		}
@@ -126,9 +126,9 @@ func TestRatingReader_Get(t *testing.T) {
 		date := time.Unix(1625162423, 0)
 
 		s := []struct {
-			Query *team.ReaderQuery
+			Query   *team.ReaderQuery
 			Ratings []*team.Rating
-			Count int
+			Count   int
 		}{
 			{
 				&team.ReaderQuery{TeamID: &team1},
@@ -146,7 +146,7 @@ func TestRatingReader_Get(t *testing.T) {
 							Difference: 4,
 						},
 						FixtureDate: time.Unix(1625162423, 0),
-						Timestamp: time.Unix(1625162423, 0),
+						Timestamp:   time.Unix(1625162423, 0),
 					},
 					{
 						TeamID:    1,
@@ -161,7 +161,7 @@ func TestRatingReader_Get(t *testing.T) {
 							Difference: 4,
 						},
 						FixtureDate: time.Unix(1625163423, 0),
-						Timestamp: time.Unix(1625163423, 0),
+						Timestamp:   time.Unix(1625163423, 0),
 					},
 					{
 						TeamID:    1,
@@ -176,7 +176,7 @@ func TestRatingReader_Get(t *testing.T) {
 							Difference: 4,
 						},
 						FixtureDate: time.Unix(1625164423, 0),
-						Timestamp: time.Unix(1625164423, 0),
+						Timestamp:   time.Unix(1625164423, 0),
 					},
 				},
 				3,
@@ -200,7 +200,7 @@ func TestRatingReader_Get(t *testing.T) {
 							Difference: 4,
 						},
 						FixtureDate: time.Unix(1625172423, 0),
-						Timestamp: time.Unix(1625172423, 0),
+						Timestamp:   time.Unix(1625172423, 0),
 					},
 				},
 				1,
@@ -224,7 +224,7 @@ func TestRatingReader_Get(t *testing.T) {
 							Difference: 4,
 						},
 						FixtureDate: time.Unix(1625162423, 0),
-						Timestamp: time.Unix(1625162423, 0),
+						Timestamp:   time.Unix(1625162423, 0),
 					},
 				},
 				1,
@@ -288,7 +288,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Difference: 4,
 			},
 			FixtureDate: time.Unix(1625162423, 0),
-			Timestamp: time.Unix(1625162423, 0),
+			Timestamp:   time.Unix(1625162423, 0),
 		},
 		{
 			TeamID:    1,
@@ -303,7 +303,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Difference: 4,
 			},
 			FixtureDate: time.Unix(1625163423, 0),
-			Timestamp: time.Unix(1625163423, 0),
+			Timestamp:   time.Unix(1625163423, 0),
 		},
 		{
 			TeamID:    1,
@@ -318,7 +318,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Difference: 4,
 			},
 			FixtureDate: time.Unix(1625164423, 0),
-			Timestamp: time.Unix(1625164423, 0),
+			Timestamp:   time.Unix(1625164423, 0),
 		},
 		{
 			TeamID:    2,
@@ -333,7 +333,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Difference: 4,
 			},
 			FixtureDate: time.Unix(1625162423, 0),
-			Timestamp: time.Unix(1625162423, 0),
+			Timestamp:   time.Unix(1625162423, 0),
 		},
 		{
 			TeamID:    2,
@@ -348,7 +348,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Difference: 4,
 			},
 			FixtureDate: time.Unix(1625172423, 0),
-			Timestamp: time.Unix(1625172423, 0),
+			Timestamp:   time.Unix(1625172423, 0),
 		},
 	}
 

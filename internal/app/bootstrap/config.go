@@ -48,15 +48,15 @@ func BuildConfig() *Config {
 	}
 
 	config.KFactorMapping = map[uint64]uint8{
-		8: 20,
-		9: 15,
+		8:  20,
+		9:  15,
 		12: 10,
 		14: 5,
 	}
 
 	config.CompetitionScoreMapping = map[uint64]uint16{
-		8: 1500,
-		9: 1450,
+		8:  1500,
+		9:  1450,
 		12: 1400,
 		14: 1350,
 	}

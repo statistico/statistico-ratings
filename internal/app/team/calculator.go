@@ -17,9 +17,9 @@ type RatingCalculator interface {
 }
 
 type ratingCalculator struct {
-	event statisticodata.EventClient
+	event          statisticodata.EventClient
 	kFactorMapping map[uint64]uint8
-	clock clockwork.Clock
+	clock          clockwork.Clock
 }
 
 func (r *ratingCalculator) ForFixture(ctx context.Context, f *statistico.Fixture, home, away *Rating) (*Rating, *Rating, error) {
@@ -60,7 +60,7 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixture *statistico.Fixture, 
 			Difference: -defence,
 		},
 		FixtureDate: time.Unix(fixture.DateTime.Utc, 0),
-		Timestamp: r.clock.Now(),
+		Timestamp:   r.clock.Now(),
 	}
 }
 
@@ -76,8 +76,8 @@ func (r *ratingCalculator) parseKFactor(f *statistico.Fixture) (uint8, error) {
 
 func NewRatingCalculator(e statisticodata.EventClient, k map[uint64]uint8, c clockwork.Clock) RatingCalculator {
 	return &ratingCalculator{
-		event: e,
+		event:          e,
 		kFactorMapping: k,
-		clock: c,
+		clock:          c,
 	}
 }
