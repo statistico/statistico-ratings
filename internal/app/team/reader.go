@@ -20,6 +20,7 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 	b := queryBuilder(r.connection)
 
 	var rating Rating
+	var date int64
 	var timestamp int64
 
 	row := b.
@@ -48,6 +49,7 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 			&rating.Attack.Difference,
 			&rating.Defence.Total,
 			&rating.Defence.Difference,
+			&date,
 			&timestamp,
 		)
 
@@ -55,6 +57,7 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 		return nil, &app.NotFoundError{TeamID: teamID}
 	}
 
+	rating.FixtureDate = time.Unix(date, 0)
 	rating.Timestamp = time.Unix(timestamp, 0)
 
 	return &rating, nil

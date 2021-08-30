@@ -165,6 +165,8 @@ github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
 github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210703110459-5fbcb7a83547 h1:s9EaPz0onEKWk0MAU4MYxriFiJQ/z971C6VW4I7EBJ0=
 github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210703110459-5fbcb7a83547/go.mod h1:SMShV/cUgCPrVzzcTSkfrdZDFOc2HC/GmIw4zE51EZo=
+github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210830190329-53083a414708 h1:Z1RpPVBvmWyVMlO1OgOYJH5j4jmzqMZm0ZSmuBAFuTY=
+github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210830190329-53083a414708/go.mod h1:afED7wRsTZutAHUyYqh4XeNVleSOkQHFhpgvFa+euwc=
 github.com/statistico/statistico-proto v0.0.3-0.20210422195817-59a711222ee6 h1:7DAtG4cQa15UfOUrKh/Utwh+vpIRoTBeouyUdCMihew=
 github.com/statistico/statistico-proto v0.0.3-0.20210422195817-59a711222ee6/go.mod h1:IegjDKIHD0rxW6y2a++xCNNqIGSTxmncB6AempSO6pk=
 github.com/statistico/statistico-proto/go v0.0.0-20210123162423-c8b53fd7dc60/go.mod h1:vPyOUzi8uJfwh6QGj2RFFsgLTG2YehvpiN/ziVWEHV0=

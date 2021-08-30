@@ -332,6 +332,7 @@ func insertRatings(t *testing.T, r team.RatingWriter) {
 				Total:      1241,
 				Difference: 4,
 			},
+			FixtureDate: time.Unix(1625162423, 0),
 			Timestamp: time.Unix(1625162423, 0),
 		},
 		{
