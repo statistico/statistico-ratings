@@ -44,6 +44,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 					Total:      234,
 					Difference: -23,
 				},
+				FixtureDate: time.Unix(1627226510, 0),
 				Timestamp: time.Unix(1627226510, 0),
 			},
 			{
@@ -58,6 +59,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 					Total:      225,
 					Difference: -3,
 				},
+				FixtureDate: time.Unix(1627226510, 0),
 				Timestamp: time.Unix(1627226510, 0),
 			},
 		}
@@ -92,6 +94,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 		a.Equal(float32(10), one.Attack.Difference)
 		a.Equal(float32(234), one.Defence.Points)
 		a.Equal(float32(-23), one.Defence.Difference)
+		a.Equal(int64(1627226510), one.FixtureDate.GetSeconds())
 		a.Equal(int64(1627226510), one.Timestamp.GetSeconds())
 
 		a.Equal(uint64(5), two.TeamId)
@@ -101,6 +104,7 @@ func TestTeamRatingService_GetTeamRatings(t *testing.T) {
 		a.Equal(float32(-2), two.Attack.Difference)
 		a.Equal(float32(225), two.Defence.Points)
 		a.Equal(float32(-3), two.Defence.Difference)
+		a.Equal(int64(1627226510), two.FixtureDate.GetSeconds())
 		a.Equal(int64(1627226510), two.Timestamp.GetSeconds())
 
 		reader.AssertExpectations(t)

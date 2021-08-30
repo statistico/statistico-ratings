@@ -6,6 +6,7 @@ import (
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/statistico/statistico-ratings/internal/app/calculate"
+	"time"
 )
 
 type RatingCalculator interface {
@@ -31,16 +32,16 @@ func (r *ratingCalculator) ForFixture(ctx context.Context, f *statistico.Fixture
 	hv := calculate.PointsValue(home.Attack.Total, away.Defence.Total, 20, hg)
 	av := calculate.PointsValue(away.Attack.Total, home.Defence.Total, 20, ag)
 
-	newHome := r.applyRating(home, uint64(f.Id), f.Season.Id, hv, av)
-	newAway := r.applyRating(away, uint64(f.Id), f.Season.Id, av, hv)
+	newHome := r.applyRating(home, f, f.Season.Id, hv, av)
+	newAway := r.applyRating(away, f, f.Season.Id, av, hv)
 
 	return newHome, newAway, nil
 }
 
-func (r *ratingCalculator) applyRating(rt *Rating, fixtureID, seasonID uint64, attack, defence float64) *Rating {
+func (r *ratingCalculator) applyRating(rt *Rating, fixture *statistico.Fixture, seasonID uint64, attack, defence float64) *Rating {
 	return &Rating{
 		TeamID:    rt.TeamID,
-		FixtureID: fixtureID,
+		FixtureID: uint64(fixture.Id),
 		SeasonID:  seasonID,
 		Attack: Points{
 			Total:      rt.Attack.Total + attack,
@@ -50,6 +51,7 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixtureID, seasonID uint64, a
 			Total:      rt.Defence.Total - defence,
 			Difference: -defence,
 		},
+		FixtureDate: time.Unix(fixture.DateTime.Utc, 0),
 		Timestamp: r.clock.Now(),
 	}
 }

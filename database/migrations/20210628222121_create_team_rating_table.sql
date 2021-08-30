@@ -9,6 +9,7 @@ CREATE TABLE team_rating (
   attack_points DECIMAL NOT NULL,
   defence_total DECIMAL NOT NULL,
   defence_points DECIMAL NOT NULL,
+  fixture_date INTEGER NOT NULL,
   timestamp INTEGER NOT NULL
 );
 

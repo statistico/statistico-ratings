@@ -31,6 +31,7 @@ func (r *ratingReader) Latest(teamID uint64) (*Rating, error) {
 			"attack_points",
 			"defence_total",
 			"defence_points",
+			"fixture_date",
 			"timestamp",
 		).
 		From("team_rating").
@@ -71,6 +72,7 @@ func (r *ratingReader) Get(q *ReaderQuery) ([]*Rating, error) {
 			"attack_points",
 			"defence_total",
 			"defence_points",
+			"fixture_date",
 			"timestamp",
 		).
 		From("team_rating")
@@ -86,6 +88,7 @@ func (r *ratingReader) Get(q *ReaderQuery) ([]*Rating, error) {
 
 func rowsToRatingSlice(rows *sql.Rows) ([]*Rating, error) {
 	var ratings []*Rating
+	var date int64
 	var timestamp int64
 
 	for rows.Next() {
@@ -101,6 +104,7 @@ func rowsToRatingSlice(rows *sql.Rows) ([]*Rating, error) {
 			&attack.Difference,
 			&defence.Total,
 			&defence.Difference,
+			&date,
 			&timestamp,
 		)
 
@@ -110,6 +114,7 @@ func rowsToRatingSlice(rows *sql.Rows) ([]*Rating, error) {
 
 		rating.Attack = attack
 		rating.Defence = defence
+		rating.FixtureDate = time.Unix(date, 0)
 		rating.Timestamp = time.Unix(timestamp, 0)
 
 		ratings = append(ratings, &rating)
