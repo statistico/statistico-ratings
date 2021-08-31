@@ -23,7 +23,7 @@ func TestPointsValue(t *testing.T) {
 				1300,
 				30,
 				1.50,
-				29.25,
+				38.25,
 			},
 			{
 				1745,
@@ -37,7 +37,7 @@ func TestPointsValue(t *testing.T) {
 				1700,
 				10,
 				3.0,
-				63.90,
+				26.10,
 			},
 			{
 				1645,

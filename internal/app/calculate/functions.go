@@ -10,7 +10,12 @@ import (
 // calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
 func PointsValue(attack, defence float64, k uint8, goals float64) float64 {
 	ge := GoalExpectancy(attack, defence)
-	val := (float64(k) * adjustGoals(goals)) * (goals - ge)
+	val := (float64(k) * adjustGoals(goals)) * ge
+
+	if goals == 0 {
+		return -(float64(int(val*100)) / 100)
+	}
+
 	return float64(int(val*100)) / 100
 }
 
