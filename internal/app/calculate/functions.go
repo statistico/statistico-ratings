@@ -16,7 +16,7 @@ func PointsValue(attack, defence float64, k uint8, goals float64) float64 {
 
 // GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
 func GoalExpectancy(attack, defence float64) float64 {
-	diff := attack - defence
+	diff := (attack + defence) / 10
 	d := float64(-diff) / 400
 	pow := 1 / (math.Pow(10, d) + 1)
 	return float64(int(pow*100)) / 100
