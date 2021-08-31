@@ -99,6 +99,16 @@ func TestGoalExpectancy(t *testing.T) {
 				1500,
 				0.91,
 			},
+			{
+				7600,
+				5500,
+				0.99,
+			},
+			{
+				17600,
+				15500,
+				0.99,
+			},
 		}
 
 		for _, st := range s {
