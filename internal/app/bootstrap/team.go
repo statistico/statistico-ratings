@@ -19,7 +19,6 @@ func (c Container) TeamRatingProcessor() team.RatingProcessor {
 		c.TeamRatingReader(),
 		c.TeamRatingWriter(),
 		c.TeamRatingCalculator(),
-		c.Config.CompetitionScoreMapping,
 	)
 }
 

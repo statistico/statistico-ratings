@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"github.com/statistico/statistico-proto/go"
-	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
 	"github.com/statistico/statistico-ratings/internal/app/team"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -26,9 +25,8 @@ func TestRatingProcessor_ByFixture(t *testing.T) {
 		reader := new(MockRatingReader)
 		writer := new(MockRatingWriter)
 		calc := new(MockRatingCalculator)
-		config := bootstrap.BuildConfig()
 
-		processor := team.NewRatingProcessor(reader, writer, calc, config.CompetitionScoreMapping)
+		processor := team.NewRatingProcessor(reader, writer, calc)
 
 		home := team.Rating{}
 		away := team.Rating{}
@@ -61,9 +59,8 @@ func TestRatingProcessor_ByFixture(t *testing.T) {
 		reader := new(MockRatingReader)
 		writer := new(MockRatingWriter)
 		calc := new(MockRatingCalculator)
-		config := bootstrap.BuildConfig()
 
-		processor := team.NewRatingProcessor(reader, writer, calc, config.CompetitionScoreMapping)
+		processor := team.NewRatingProcessor(reader, writer, calc)
 
 		e := errors.New("rating reader error")
 
@@ -88,9 +85,8 @@ func TestRatingProcessor_ByFixture(t *testing.T) {
 		reader := new(MockRatingReader)
 		writer := new(MockRatingWriter)
 		calc := new(MockRatingCalculator)
-		config := bootstrap.BuildConfig()
 
-		processor := team.NewRatingProcessor(reader, writer, calc, config.CompetitionScoreMapping)
+		processor := team.NewRatingProcessor(reader, writer, calc)
 
 		e := errors.New("rating calculator error")
 
@@ -122,9 +118,8 @@ func TestRatingProcessor_ByFixture(t *testing.T) {
 		reader := new(MockRatingReader)
 		writer := new(MockRatingWriter)
 		calc := new(MockRatingCalculator)
-		config := bootstrap.BuildConfig()
 
-		processor := team.NewRatingProcessor(reader, writer, calc, config.CompetitionScoreMapping)
+		processor := team.NewRatingProcessor(reader, writer, calc)
 
 		e := errors.New("rating writer error")
 

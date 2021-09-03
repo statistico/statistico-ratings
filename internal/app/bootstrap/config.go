@@ -5,7 +5,6 @@ import (
 )
 
 type Config struct {
-	CompetitionScoreMapping
 	Database
 	KFactorMapping
 	Sentry
@@ -23,8 +22,6 @@ type Database struct {
 }
 
 type KFactorMapping map[uint64]uint8
-
-type CompetitionScoreMapping map[uint64]uint16
 
 type Sentry struct {
 	DSN string
@@ -52,13 +49,6 @@ func BuildConfig() *Config {
 		9:  15,
 		12: 10,
 		14: 5,
-	}
-
-	config.CompetitionScoreMapping = map[uint64]uint16{
-		8:  1500,
-		9:  1450,
-		12: 1400,
-		14: 1350,
 	}
 
 	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}

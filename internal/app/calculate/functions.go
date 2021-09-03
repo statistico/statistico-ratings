@@ -5,21 +5,20 @@ import (
 	"math"
 )
 
-// PointsValue calculates the value for the attack vs defence scenario using
-// an ELO based calculation. k argument relates to the k factor used with elo
-// calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
-func PointsValue(attack, defence float64, k uint8, goals float64) float64 {
-	ge := GoalExpectancy(attack, defence)
-	val := (float64(k) * adjustGoals(goals)) * (goals - ge)
-	return float64(int(val*100)) / 100
-}
+func PointsValue(attack, defence float64, k uint8, goals float64) (float64, float64) {
+	// Adjust goals for true reflection
+	if goals == 0 {
+		d := float64(k) / math.Abs(attack - defence)
 
-// GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
-func GoalExpectancy(attack, defence float64) float64 {
-	diff := attack - defence
-	d := float64(-diff) / 400
-	pow := 1 / (math.Pow(10, d) + 1)
-	return float64(int(pow*100)) / 100
+		return -float64(int(d*100)) / 100, -float64(int(d*100)) / 100
+	}
+
+	kg := float64(k) * goals
+
+	a := kg / defence
+	d := kg / attack
+
+	return float64(int(a*100)) / 100, float64(int(d*100)) / 100
 }
 
 // AdjustedGoals calculates the value of the goals scored for each team. A goal value can be increased or decreased
@@ -79,12 +78,4 @@ func hasBeenRedCard(cards []*statistico.CardEvent, teamID uint64, min uint32) bo
 	}
 
 	return false
-}
-
-func adjustGoals(g float64) float64 {
-	if g == 0.0 {
-		g = 1.0
-	}
-
-	return g
 }

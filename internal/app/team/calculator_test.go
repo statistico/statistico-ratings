@@ -36,11 +36,11 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		FixtureID: 25,
 		SeasonID:  17462,
 		Attack: team.Points{
-			Total:      1670,
+			Total:      167.10,
 			Difference: 5,
 		},
 		Defence: team.Points{
-			Total:      1542.45,
+			Total:      152.45,
 			Difference: -4,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
@@ -52,11 +52,11 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		FixtureID: 25,
 		SeasonID:  17462,
 		Attack: team.Points{
-			Total:      1870,
+			Total:      170,
 			Difference: 15,
 		},
 		Defence: team.Points{
-			Total:      1642.45,
+			Total:      42.45,
 			Difference: -14,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
@@ -98,20 +98,20 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		a.Equal(uint64(10), newHome.TeamID)
 		a.Equal(uint64(26), newHome.FixtureID)
 		a.Equal(uint64(17462), newHome.SeasonID)
-		a.Equal(1679.39, newHome.Attack.Total)
-		a.Equal(9.39, newHome.Attack.Difference)
-		a.Equal(1559.65, newHome.Defence.Total)
-		a.Equal(17.20, newHome.Defence.Difference)
+		a.Equal(167.57, newHome.Attack.Total)
+		a.Equal(0.47, newHome.Attack.Difference)
+		a.Equal(152.56, newHome.Defence.Total)
+		a.Equal(0.11, newHome.Defence.Difference)
 		a.Equal(time.Unix(1630343736, 0), newHome.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 
 		a.Equal(uint64(12), newAway.TeamID)
 		a.Equal(uint64(26), newAway.FixtureID)
 		a.Equal(uint64(17462), newAway.SeasonID)
-		a.Equal(1852.8, newAway.Attack.Total)
-		a.Equal(-17.20, newAway.Attack.Difference)
-		a.Equal(1633.06, newAway.Defence.Total)
-		a.Equal(-9.39, newAway.Defence.Difference)
+		a.Equal(168.87, newAway.Attack.Total)
+		a.Equal(-1.13, newAway.Attack.Difference)
+		a.Equal(41.32, newAway.Defence.Total)
+		a.Equal(-1.13, newAway.Defence.Difference)
 		a.Equal(time.Unix(1630343736, 0), newAway.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 	})
