@@ -2,7 +2,6 @@ package team
 
 import (
 	"context"
-	"fmt"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/statistico/statistico-ratings/internal/app"
 )
@@ -15,17 +14,16 @@ type ratingProcessor struct {
 	reader             RatingReader
 	writer             RatingWriter
 	calculator         RatingCalculator
-	competitionMapping map[uint64]uint16
 }
 
 func (r *ratingProcessor) ByFixture(ctx context.Context, f *statistico.Fixture) error {
-	home, err := r.fetchRating(f.HomeTeam.Id, f.Competition.Id)
+	home, err := r.fetchRating(f.HomeTeam.Id)
 
 	if err != nil {
 		return err
 	}
 
-	away, err := r.fetchRating(f.AwayTeam.Id, f.Competition.Id)
+	away, err := r.fetchRating(f.AwayTeam.Id)
 
 	if err != nil {
 		return err
@@ -52,25 +50,19 @@ func (r *ratingProcessor) ByFixture(ctx context.Context, f *statistico.Fixture) 
 	return nil
 }
 
-func (r *ratingProcessor) fetchRating(teamID, competitionID uint64) (*Rating, error) {
+func (r *ratingProcessor) fetchRating(teamID uint64) (*Rating, error) {
 	rating, err := r.reader.Latest(teamID)
 
 	switch err.(type) {
 	case *app.NotFoundError:
-		score, err := r.parseCompetitionScore(competitionID)
-
-		if err != nil {
-			return nil, err
-		}
-
 		return &Rating{
 			TeamID: teamID,
 			Attack: Points{
-				Total:      float64(score),
+				Total:      100,
 				Difference: 0,
 			},
 			Defence: Points{
-				Total:      float64(score),
+				Total:      100,
 				Difference: 0,
 			},
 		}, nil
@@ -81,21 +73,10 @@ func (r *ratingProcessor) fetchRating(teamID, competitionID uint64) (*Rating, er
 	}
 }
 
-func (r *ratingProcessor) parseCompetitionScore(competitionID uint64) (uint16, error) {
-	for competition, score := range r.competitionMapping {
-		if competitionID == competition {
-			return score, nil
-		}
-	}
-
-	return 0, fmt.Errorf("competition %d is not supported", competitionID)
-}
-
-func NewRatingProcessor(r RatingReader, w RatingWriter, c RatingCalculator, comp map[uint64]uint16) RatingProcessor {
+func NewRatingProcessor(r RatingReader, w RatingWriter, c RatingCalculator) RatingProcessor {
 	return &ratingProcessor{
 		reader:             r,
 		writer:             w,
 		calculator:         c,
-		competitionMapping: comp,
 	}
 }

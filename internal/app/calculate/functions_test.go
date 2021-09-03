@@ -8,7 +8,7 @@ import (
 )
 
 func TestPointsValue(t *testing.T) {
-	t.Run("returns float value for elo calculation", func(t *testing.T) {
+	t.Run("returns float values for rating calculation", func(t *testing.T) {
 		t.Helper()
 
 		s := []struct {
@@ -16,105 +16,80 @@ func TestPointsValue(t *testing.T) {
 			Defence float64
 			K       uint8
 			G       float64
-			Value   float64
+			AttackValue   float64
+			DefenceValue   float64
 		}{
 			{
-				1745,
-				1300,
+				80,
 				30,
-				1.50,
-				38.25,
+				50,
+				2,
+				3.33,
+				1.25,
 			},
 			{
-				1745,
-				1300,
-				30,
-				0.0,
-				-25.50,
+				120,
+				150,
+				50,
+				4,
+				1.33,
+				1.66,
 			},
 			{
-				1645,
-				1700,
-				10,
-				3.0,
-				26.10,
+				220,
+				200,
+				50,
+				2,
+				0.50,
+				0.45,
 			},
 			{
-				1645,
-				1640,
-				10,
+				50,
+				40,
+				50,
+				5,
+				6.25,
+				5,
+			},
+			{
+				220,
+				200,
+				50,
 				0,
-				-8.60,
+				-2.50,
+				-2.50,
+			},
+			{
+				220,
+				50,
+				50,
+				0,
+				-0.29,
+				-0.29,
+			},
+			{
+				100,
+				200,
+				50,
+				0,
+				-0.50,
+				-0.50,
+			},
+			{
+				170,
+				100,
+				50,
+				1,
+				0.50,
+				0.29,
 			},
 		}
 
 		for _, st := range s {
-			e := calculate.PointsValue(st.Attack, st.Defence, st.K, st.G)
+			a, d := calculate.PointsValue(st.Attack, st.Defence, st.K, st.G)
 
-			assert.Equal(t, st.Value, e)
-		}
-	})
-}
-func TestGoalExpectancy(t *testing.T) {
-	t.Run("returns calculated goal expectancy", func(t *testing.T) {
-		t.Helper()
-
-		s := []struct {
-			Attack         float64
-			Defence        float64
-			GoalExpectancy float64
-		}{
-			{
-				1745,
-				1300,
-				0.85,
-			},
-			{
-				1300,
-				1745,
-				0.85,
-			},
-			{
-				1610,
-				1600,
-				0.86,
-			},
-			{
-				2800,
-				2800,
-				0.96,
-			},
-			{
-				2500,
-				2412,
-				0.94,
-			},
-			{
-				2300,
-				2000,
-				0.92,
-			},
-			{
-				2600,
-				1500,
-				0.91,
-			},
-			{
-				7600,
-				5500,
-				0.99,
-			},
-			{
-				17600,
-				15500,
-				0.99,
-			},
-		}
-
-		for _, st := range s {
-			e := calculate.GoalExpectancy(st.Attack, st.Defence)
-
-			assert.Equal(t, st.GoalExpectancy, e)
+			assert.Equal(t, st.AttackValue, a)
+			assert.Equal(t, st.DefenceValue, d)
 		}
 	})
 }
