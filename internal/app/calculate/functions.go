@@ -5,9 +5,6 @@ import (
 	"math"
 )
 
-// PointsValue calculates the value for the attack vs defence scenario using
-// an ELO based calculation. k argument relates to the k factor used with elo
-// calculation see https://en.wikipedia.org/wiki/Elo_rating_system#The_K-factor_used_by_the_USCF
 func PointsValue(attack, defence float64, k uint8, goals float64) (float64, float64) {
 	// Adjust goals for true reflection
 	if goals == 0 {
@@ -22,20 +19,6 @@ func PointsValue(attack, defence float64, k uint8, goals float64) (float64, floa
 	d := kg / attack
 
 	return float64(int(a*100)) / 100, float64(int(d*100)) / 100
-}
-
-// GoalExpectancy calculates the expected goal probability based on attack and defence rating values.
-func GoalExpectancy(attack, defence float64) float64 {
-	diff := -defence + attack
-	//d := float64(diff) / 400
-	//pow := 1 / (math.Pow(10, d) + 1)
-	//val := float64(int(pow*100)) / 100
-	//
-	//if defence > attack {
-	//	return 1 - val
-	//}
-
-	return 1 - (1 / math.Sqrt(diff))
 }
 
 // AdjustedGoals calculates the value of the goals scored for each team. A goal value can be increased or decreased
