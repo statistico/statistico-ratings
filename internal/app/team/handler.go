@@ -13,8 +13,8 @@ type RatingHandler struct {
 	logger    *logrus.Logger
 }
 
-func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) {
-	fixtures, err := r.fetcher.ByCompetition(ctx, competitionID, numSeasons)
+func (r *RatingHandler) ByCompetition(ctx context.Context, competitionID, seasonID uint64) {
+	fixtures, err := r.fetcher.ByCompetition(ctx, competitionID, seasonID)
 
 	if err != nil {
 		r.logger.Errorf("error fetching fixtures in team rating handler: %s", err.Error())

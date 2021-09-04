@@ -18,8 +18,8 @@ func main() {
 		Commands: []cli.Command{
 			{
 				Name:        "team:by-competition",
-				Usage:       "Calculate team ratings for a competition",
-				Description: "Calculate team ratings for a competition",
+				Usage:       "Calculate team ratings for a competition and season",
+				Description: "Calculate team ratings for a competition and season",
 				Before: func(c *cli.Context) error {
 					fmt.Println("Calculating team ratings...")
 					return nil
@@ -29,7 +29,7 @@ func main() {
 					return nil
 				},
 				Action: func(c *cli.Context) error {
-					handler.ByCompetition(ctx, c.Uint64("competition"), int8(c.Int("seasons")))
+					handler.ByCompetition(ctx, c.Uint64("competition"), c.Uint64("season"))
 					return nil
 				},
 				Flags: []cli.Flag{
@@ -39,8 +39,8 @@ func main() {
 						Required: true,
 					},
 					&cli.IntFlag{
-						Name:     "seasons",
-						Usage:    "The number of seasons to calculate ratings for",
+						Name:     "season",
+						Usage:    "The ID of the season to calculate ratings for",
 						Required: true,
 					},
 				},
