@@ -2,6 +2,7 @@ package fixture
 
 import (
 	"context"
+	"fmt"
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"github.com/jonboulle/clockwork"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
@@ -10,7 +11,7 @@ import (
 )
 
 type Fetcher interface {
-	ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error)
+	ByCompetition(ctx context.Context, competitionID, seasonID uint64) ([]*statistico.Fixture, error)
 	ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error)
 }
 
@@ -21,15 +22,21 @@ type fetcher struct {
 	clock         clockwork.Clock
 }
 
-func (f *fetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
+func (f *fetcher) ByCompetition(ctx context.Context, competitionID, seasonID uint64) ([]*statistico.Fixture, error) {
 	res, err := f.seasonClient.ByCompetitionID(ctx, competitionID, "name_desc")
 
 	if err != nil {
 		return nil, err
 	}
 
+	season, err := parseSeason(res, seasonID)
+
+	if err != nil {
+		return nil, err
+	}
+
 	req := statistico.FixtureSearchRequest{
-		SeasonIds:  parseSeasons(res, numSeasons),
+		SeasonIds:  []uint64{season.Id},
 		DateBefore: &wrappers.StringValue{Value: f.clock.Now().Format(time.RFC3339)},
 		Sort:       &wrappers.StringValue{Value: "date_asc"},
 	}
@@ -67,16 +74,14 @@ func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fix
 	return fixtures, nil
 }
 
-func parseSeasons(s []*statistico.Season, num int8) []uint64 {
-	x := s[len(s)-int(num):]
-
-	var seasons []uint64
-
-	for _, season := range x {
-		seasons = append(seasons, season.Id)
+func parseSeason(s []*statistico.Season, id uint64) (*statistico.Season, error) {
+	for _, season := range s {
+		if season.Id == id {
+			return season, nil
+		}
 	}
 
-	return seasons
+	return nil, fmt.Errorf("season %d does not exist", id)
 }
 
 func NewFetcher(c []uint64, f statisticodata.FixtureClient, s statisticodata.SeasonClient, cl clockwork.Clock) Fetcher {

@@ -35,13 +35,13 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		ctx := context.Background()
 
-		fetcher.On("ByCompetition", ctx, uint64(8), int8(4)).Return(fixtures, nil)
+		fetcher.On("ByCompetition", ctx, uint64(8), uint64(4)).Return(fixtures, nil)
 
 		processor.On("ByFixture", ctx, &fix1).Once().Return(nil)
 		processor.On("ByFixture", ctx, &fix2).Once().Return(nil)
 		processor.On("ByFixture", ctx, &fix3).Once().Return(nil)
 
-		handler.ByCompetition(ctx, uint64(8), int8(4))
+		handler.ByCompetition(ctx, uint64(8), uint64(4))
 
 		fetcher.AssertExpectations(t)
 		processor.AssertExpectations(t)
@@ -60,11 +60,11 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		ctx := context.Background()
 
-		fetcher.On("ByCompetition", ctx, uint64(8), int8(4)).Return([]*statistico.Fixture{}, e)
+		fetcher.On("ByCompetition", ctx, uint64(8), uint64(4)).Return([]*statistico.Fixture{}, e)
 
 		processor.AssertNotCalled(t, "ByFixture")
 
-		handler.ByCompetition(ctx, uint64(8), int8(4))
+		handler.ByCompetition(ctx, uint64(8), uint64(4))
 
 		assert.Equal(t, "error fetching fixtures in team rating handler: fixture fetcher error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
@@ -92,7 +92,7 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		ctx := context.Background()
 
-		fetcher.On("ByCompetition", ctx, uint64(8), int8(4)).Return(fixtures, nil)
+		fetcher.On("ByCompetition", ctx, uint64(8), uint64(4)).Return(fixtures, nil)
 
 		e := errors.New("team rating processing error")
 
@@ -101,7 +101,7 @@ func TestRatingHandler_ByCompetition(t *testing.T) {
 
 		processor.AssertNotCalled(t, "ByFixture", ctx, &fix3)
 
-		handler.ByCompetition(ctx, uint64(8), int8(4))
+		handler.ByCompetition(ctx, uint64(8), uint64(4))
 
 		assert.Equal(t, "error processing fixtures in team rating handler: team rating processing error", hook.LastEntry().Message)
 		assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
@@ -213,8 +213,8 @@ type MockFixtureFetcher struct {
 	mock.Mock
 }
 
-func (m *MockFixtureFetcher) ByCompetition(ctx context.Context, competitionID uint64, numSeasons int8) ([]*statistico.Fixture, error) {
-	args := m.Called(ctx, competitionID, numSeasons)
+func (m *MockFixtureFetcher) ByCompetition(ctx context.Context, competitionID, seasonID uint64) ([]*statistico.Fixture, error) {
+	args := m.Called(ctx, competitionID, seasonID)
 	return args.Get(0).([]*statistico.Fixture), args.Error(1)
 }
 

@@ -28,7 +28,7 @@ func TestFetcher_ByCompetition(t *testing.T) {
 		seasonClient.On("ByCompetitionID", ctx, uint64(8), "name_desc").Return(seasonResponse(), nil)
 
 		req := mock.MatchedBy(func(r *statistico.FixtureSearchRequest) bool {
-			assert.Equal(t, []uint64{2, 3}, r.SeasonIds)
+			assert.Equal(t, []uint64{2}, r.SeasonIds)
 			assert.Equal(t, "1984-04-04T00:00:00Z", r.DateBefore.GetValue())
 			assert.Equal(t, "date_asc", r.Sort.GetValue())
 			return true
@@ -38,7 +38,7 @@ func TestFetcher_ByCompetition(t *testing.T) {
 
 		fixtureClient.On("Search", ctx, req).Return(response, nil)
 
-		fixtures, err := fetcher.ByCompetition(ctx, uint64(8), int8(2))
+		fixtures, err := fetcher.ByCompetition(ctx, uint64(8), uint64(2))
 
 		if err != nil {
 			t.Fatalf("Expected nil, got %s", err.Error())
@@ -67,7 +67,7 @@ func TestFetcher_ByCompetition(t *testing.T) {
 
 		fixtureClient.AssertNotCalled(t, "Search")
 
-		_, err := fetcher.ByCompetition(ctx, uint64(8), int8(2))
+		_, err := fetcher.ByCompetition(ctx, uint64(8), uint64(2))
 
 		if err == nil {
 			t.Fatal("Expected error, got nil")
@@ -95,7 +95,7 @@ func TestFetcher_ByCompetition(t *testing.T) {
 		seasonClient.On("ByCompetitionID", ctx, uint64(8), "name_desc").Return(seasonResponse(), nil)
 
 		req := mock.MatchedBy(func(r *statistico.FixtureSearchRequest) bool {
-			assert.Equal(t, []uint64{2, 3}, r.SeasonIds)
+			assert.Equal(t, []uint64{2}, r.SeasonIds)
 			assert.Equal(t, "1984-04-04T00:00:00Z", r.DateBefore.GetValue())
 			assert.Equal(t, "date_asc", r.Sort.GetValue())
 			return true
@@ -103,13 +103,42 @@ func TestFetcher_ByCompetition(t *testing.T) {
 
 		fixtureClient.On("Search", ctx, req).Return([]*statistico.Fixture{}, e)
 
-		_, err := fetcher.ByCompetition(ctx, uint64(8), int8(2))
+		_, err := fetcher.ByCompetition(ctx, uint64(8), uint64(2))
 
 		if err == nil {
 			t.Fatal("Expected error, got nil")
 		}
 
 		assert.Equal(t, "fixture client error", err.Error())
+		seasonClient.AssertExpectations(t)
+		fixtureClient.AssertExpectations(t)
+	})
+
+	t.Run("returns an error if season provided does not exist", func(t *testing.T) {
+		t.Helper()
+
+		t.Helper()
+
+		competitions := []uint64{8}
+		fixtureClient := new(MockFixtureClient)
+		seasonClient := new(MockSeasonClient)
+		clock := clockwork.NewFakeClock()
+
+		ctx := context.Background()
+
+		fetcher := fixture.NewFetcher(competitions, fixtureClient, seasonClient, clock)
+
+		seasonClient.On("ByCompetitionID", ctx, uint64(8), "name_desc").Return(seasonResponse(), nil)
+
+		fixtureClient.AssertNotCalled(t, "Search")
+
+		_, err := fetcher.ByCompetition(ctx, uint64(8), uint64(12))
+
+		if err == nil {
+			t.Fatal("Expected error, got nil")
+		}
+
+		assert.Equal(t, "season 12 does not exist", err.Error())
 		seasonClient.AssertExpectations(t)
 		fixtureClient.AssertExpectations(t)
 	})
