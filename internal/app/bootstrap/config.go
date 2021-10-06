@@ -44,13 +44,6 @@ func BuildConfig() *Config {
 		Name:     os.Getenv("DB_NAME"),
 	}
 
-	config.KFactorMapping = map[uint64]uint8{
-		8:  20,
-		9:  15,
-		12: 10,
-		14: 5,
-	}
-
 	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}
 
 	config.StatisticoDataService = StatisticoDataService{

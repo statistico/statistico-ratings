@@ -5,20 +5,15 @@ import (
 	"math"
 )
 
-func PointsValue(attack, defence float64, k uint8, goals float64) (float64, float64) {
-	// Adjust goals for true reflection
+func PointsValue(attack, defence float64, k, goals float64) float64 {
 	if goals == 0 {
-		d := float64(k) / math.Abs(attack - defence)
-
-		return -float64(int(d*100)) / 100, -float64(int(d*100)) / 100
+		val := -math.Abs(attack - defence)
+		return float64(int(val*100)) / 100
 	}
 
-	kg := float64(k) * goals
+	kg := (defence / attack) * k * goals
 
-	a := kg / defence
-	d := kg / attack
-
-	return float64(int(a*100)) / 100, float64(int(d*100)) / 100
+	return float64(int(kg*100)) / 100
 }
 
 // AdjustedGoals calculates the value of the goals scored for each team. A goal value can be increased or decreased
