@@ -2,7 +2,6 @@ package team
 
 import (
 	"context"
-	"fmt"
 	"github.com/jonboulle/clockwork"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
@@ -31,17 +30,11 @@ func (r *ratingCalculator) ForFixture(ctx context.Context, f *statistico.Fixture
 
 	hg, ag := calculate.AdjustedGoals(f.HomeTeam.Id, f.AwayTeam.Id, events.Goals, events.Cards)
 
-	k, err := r.parseKFactor(f)
+	hp := calculate.PointsValue(home.Attack.Total, away.Defence.Total, 35, hg)
+	ap := calculate.PointsValue(away.Attack.Total, home.Defence.Total, 35, ag)
 
-	if err != nil {
-		return nil, nil, err
-	}
-
-	ha, ad := calculate.PointsValue(home.Attack.Total, away.Defence.Total, k, hg)
-	aa, hd := calculate.PointsValue(away.Attack.Total, home.Defence.Total, k, ag)
-
-	newHome := r.applyRating(home, f, f.Season.Id, ha, ad)
-	newAway := r.applyRating(away, f, f.Season.Id, aa, hd)
+	newHome := r.applyRating(home, f, f.Season.Id, hp, ap)
+	newAway := r.applyRating(away, f, f.Season.Id, ap, hp)
 
 	return newHome, newAway, nil
 }
@@ -62,16 +55,6 @@ func (r *ratingCalculator) applyRating(rt *Rating, fixture *statistico.Fixture, 
 		FixtureDate: time.Unix(fixture.DateTime.Utc, 0),
 		Timestamp:   r.clock.Now(),
 	}
-}
-
-func (r *ratingCalculator) parseKFactor(f *statistico.Fixture) (uint8, error) {
-	for competition, factor := range r.kFactorMapping {
-		if competition == f.Competition.Id {
-			return factor, nil
-		}
-	}
-
-	return 0, fmt.Errorf("competition %d is not supported", f.Competition.Id)
 }
 
 func NewRatingCalculator(e statisticodata.EventClient, k map[uint64]uint8, c clockwork.Clock) RatingCalculator {

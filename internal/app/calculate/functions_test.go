@@ -1,7 +1,7 @@
 package calculate_test
 
 import (
-	statistico "github.com/statistico/statistico-proto/go"
+	"github.com/statistico/statistico-proto/go"
 	"github.com/statistico/statistico-ratings/internal/app/calculate"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -14,82 +14,65 @@ func TestPointsValue(t *testing.T) {
 		s := []struct {
 			Attack  float64
 			Defence float64
-			K       uint8
 			G       float64
-			AttackValue   float64
-			DefenceValue   float64
+			KFactor float64
+			Points   float64
 		}{
 			{
 				80,
 				30,
-				50,
 				2,
-				3.33,
-				1.25,
+				35,
+				26.25,
 			},
 			{
 				120,
 				150,
-				50,
 				4,
-				1.33,
-				1.66,
+				35,
+				175,
 			},
 			{
 				220,
 				200,
-				50,
 				2,
-				0.50,
-				0.45,
+				35,
+				63.63,
 			},
 			{
 				50,
 				40,
-				50,
 				5,
-				6.25,
-				5,
+				35,
+				140,
 			},
 			{
 				220,
 				200,
-				50,
 				0,
-				-2.50,
-				-2.50,
+				35,
+				-20,
 			},
 			{
 				220,
 				50,
-				50,
 				0,
-				-0.29,
-				-0.29,
+				35,
+				-170,
 			},
 			{
 				100,
 				200,
-				50,
 				0,
-				-0.50,
-				-0.50,
-			},
-			{
-				170,
-				100,
-				50,
-				1,
-				0.50,
-				0.29,
+				35,
+				-100,
 			},
 		}
 
 		for _, st := range s {
-			a, d := calculate.PointsValue(st.Attack, st.Defence, st.K, st.G)
+			a := calculate.PointsValue(st.Attack, st.Defence, st.KFactor, st.G)
 
-			assert.Equal(t, st.AttackValue, a)
-			assert.Equal(t, st.DefenceValue, d)
+			assert.Equal(t, st.Points, a)
 		}
 	})
 }
