@@ -30,8 +30,8 @@ func (r *ratingCalculator) ForFixture(ctx context.Context, f *statistico.Fixture
 
 	hg, ag := calculate.AdjustedGoals(f.HomeTeam.Id, f.AwayTeam.Id, events.Goals, events.Cards)
 
-	hp := calculate.PointsValue(home.Attack.Total, away.Defence.Total, 35, hg)
-	ap := calculate.PointsValue(away.Attack.Total, home.Defence.Total, 35, ag)
+	hp := calculate.PointsValue(home.Attack.Total, away.Defence.Total, 15, hg)
+	ap := calculate.PointsValue(away.Attack.Total, home.Defence.Total, 15, ag)
 
 	newHome := r.applyRating(home, f, f.Season.Id, hp, ap)
 	newAway := r.applyRating(away, f, f.Season.Id, ap, hp)
