@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/csv"
 	"fmt"
 	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
 	"github.com/urfave/cli"
+	"io"
 	"os"
+	"strconv"
 )
 
 func main() {
@@ -17,7 +20,7 @@ func main() {
 		Name: "Statistico Ratings - Command Line Application",
 		Commands: []cli.Command{
 			{
-				Name:        "team:by-competition",
+				Name:        "team:csv",
 				Usage:       "Calculate team ratings for a competition and season",
 				Description: "Calculate team ratings for a competition and season",
 				Before: func(c *cli.Context) error {
@@ -29,18 +32,33 @@ func main() {
 					return nil
 				},
 				Action: func(c *cli.Context) error {
-					handler.ByCompetition(ctx, c.Uint64("competition"), c.Uint64("season"))
+					cs, err := os.Open(c.String("filepath"))
+
+					if err != nil {
+						return err
+					}
+
+					seasons := csv.NewReader(cs)
+
+					for {
+						row, err := seasons.Read()
+
+						if err == io.EOF {
+							break
+						}
+
+						comp, _ := strconv.ParseUint(row[0], 0, 64)
+						season, _ := strconv.ParseUint(row[1], 0, 64)
+
+						handler.ByCompetition(ctx, comp, season)
+					}
+
 					return nil
 				},
 				Flags: []cli.Flag{
-					&cli.Uint64Flag{
-						Name:     "competition",
-						Usage:    "The ID of the competition to calculate ratings for",
-						Required: true,
-					},
-					&cli.IntFlag{
-						Name:     "season",
-						Usage:    "The ID of the season to calculate ratings for",
+					&cli.StringFlag{
+						Name:     "filepath",
+						Usage:    "The filepath where the csv resides",
 						Required: true,
 					},
 				},

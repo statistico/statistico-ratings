@@ -21,7 +21,7 @@ type Database struct {
 	Name     string
 }
 
-type KFactorMapping map[uint64]uint8
+type KFactorMapping map[uint64]float64
 
 type Sentry struct {
 	DSN string
@@ -42,6 +42,13 @@ func BuildConfig() *Config {
 		User:     os.Getenv("DB_USER"),
 		Password: os.Getenv("DB_PASSWORD"),
 		Name:     os.Getenv("DB_NAME"),
+	}
+
+	config.KFactorMapping = map[uint64]float64{
+		8: 15,
+		9: 12,
+		12: 10,
+		14: 8,
 	}
 
 	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}
