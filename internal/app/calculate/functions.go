@@ -7,13 +7,13 @@ import (
 
 func PointsValue(attack, defence float64, k, goals float64) float64 {
 	if goals == 0 {
-		val := math.Abs(attack - defence)
+		val := math.Abs(defence - attack)
 
 		if val == 0 {
 			return -k
 		}
 
-		kg := (defence / attack) * (k * 2)
+		kg := (defence / attack) * (k * 1.5)
 
 		return -float64(int(kg*100)) / 100
 	}
