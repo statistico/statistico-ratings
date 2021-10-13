@@ -58,11 +58,11 @@ func (r *ratingProcessor) fetchRating(teamID uint64) (*Rating, error) {
 		return &Rating{
 			TeamID: teamID,
 			Attack: Points{
-				Total:      100,
+				Total:      1000,
 				Difference: 0,
 			},
 			Defence: Points{
-				Total:      100,
+				Total:      1000,
 				Difference: 0,
 			},
 		}, nil
