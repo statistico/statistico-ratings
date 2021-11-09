@@ -22,14 +22,14 @@ workflows:
           filters:
             branches:
               only: main
-#      - deploy-to-production:
-#          context: aws
-#          requires:
-#            - build-and-test
-#            - release-images
-#          filters:
-#            branches:
-#              only: main
+      - deploy-to-production:
+          context: aws
+          requires:
+            - build-and-test
+            - release-images
+          filters:
+            branches:
+              only: main
 
 jobs:
   build-and-test:
@@ -76,14 +76,14 @@ jobs:
       - image: 'circleci/python:3.7.1'
     steps:
       - aws-cli/setup
+#      - aws-ecs/update-service:
+#          family: 'statistico-ratings-grpc'
+#          cluster-name: 'statistico-production'
+#          container-image-name-updates: >
+#            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
       - aws-ecs/update-service:
           family: 'statistico-ratings-grpc'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
-      - aws-ecs/update-service:
-          family: 'statistico-ratings-background'
-          cluster-name: 'statistico-production'
-          container-image-name-updates: >
-            container=cron,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
-            container=migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
+            container=statistico-ratings-grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
+            container=statistico-ratings-migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
