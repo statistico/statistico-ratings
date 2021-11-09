@@ -1,18 +1,5 @@
 version: "3.3"
 services:
-  envoy-proxy:
-    build:
-      context: .
-      dockerfile: ./.docker/envoy/Dockerfile
-    networks:
-      - statistico_internal
-    environment:
-      STATISTICO_RATINGS_HOST: statistico-ratings-grpc
-      STATISTICO_RATINGS_PORT: 50051
-    ports:
-      - "9902:9902"
-      - "8090:8090"
-
   postgres:
     image: postgres
     environment:

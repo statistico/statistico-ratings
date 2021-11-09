@@ -45,10 +45,10 @@ func BuildConfig() *Config {
 	}
 
 	config.KFactorMapping = map[uint64]float64{
-		8: 15,
-		9: 12,
-		12: 10,
-		14: 8,
+		8: 5,
+		9: 4,
+		12: 3,
+		14: 2,
 	}
 
 	config.Sentry = Sentry{DSN: os.Getenv("SENTRY_DSN")}
