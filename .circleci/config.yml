@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.20
-  aws-ecs: circleci/aws-ecs@1.1.0
+  aws-ecs: circleci/aws-ecs@2.2.1
 
 references:
   workspace_root: &workspace_root
@@ -82,8 +82,8 @@ jobs:
 #          container-image-name-updates: >
 #            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
       - aws-ecs/update-service:
-          family: 'statistico-ratings-grpc'
+          family: 'statistico-ratings'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=statistico-ratings-grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
-            container=statistico-ratings-migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
+            container=statistico-ratings-grpc,tag=${CIRCLE_SHA1},
+            container=statistico-ratings-migrate,tag=${CIRCLE_SHA1}
