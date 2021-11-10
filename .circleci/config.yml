@@ -19,17 +19,17 @@ workflows:
           context: aws
           requires:
             - build-and-test
-          filters:
-            branches:
-              only: main
+#          filters:
+#            branches:
+#              only: main
       - deploy-to-production:
           context: aws
           requires:
             - build-and-test
             - release-images
-          filters:
-            branches:
-              only: main
+#          filters:
+#            branches:
+#              only: main
 
 jobs:
   build-and-test:
@@ -82,8 +82,8 @@ jobs:
 #          container-image-name-updates: >
 #            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
       - aws-ecs/update-service:
-          family: 'statistico-ratings-grpc'
+          family: 'statistico-ratings'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=statistico-ratings-grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
-            container=statistico-ratings-migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
+            container=statistico-ratings-grpc,tag=${CIRCLE_SHA1},
+            container=statistico-ratings-migrate,tag=${CIRCLE_SHA1}
