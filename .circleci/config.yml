@@ -82,7 +82,7 @@ jobs:
 #          container-image-name-updates: >
 #            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
       - aws-ecs/update-service:
-          family: 'statistico-ratings'
+          family: 'statistico-ratings-grpc'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
             container=statistico-ratings-grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1},
