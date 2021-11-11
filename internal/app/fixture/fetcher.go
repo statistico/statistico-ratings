@@ -12,7 +12,7 @@ import (
 
 type Fetcher interface {
 	ByCompetition(ctx context.Context, competitionID, seasonID uint64) ([]*statistico.Fixture, error)
-	ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error)
+	ByDate(ctx context.Context, from, to time.Time) ([]*statistico.Fixture, error)
 }
 
 type fetcher struct {
@@ -44,14 +44,10 @@ func (f *fetcher) ByCompetition(ctx context.Context, competitionID, seasonID uin
 	return f.fixtureClient.Search(ctx, &req)
 }
 
-func (f *fetcher) ByDate(ctx context.Context, date time.Time) ([]*statistico.Fixture, error) {
-	year, month, day := date.Date()
-	start := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	end := time.Date(year, month, day, 23, 59, 59, 0, time.UTC)
-
+func (f *fetcher) ByDate(ctx context.Context, from, to time.Time) ([]*statistico.Fixture, error) {
 	request := statistico.FixtureSearchRequest{
-		DateAfter:  &wrappers.StringValue{Value: start.Format(time.RFC3339)},
-		DateBefore: &wrappers.StringValue{Value: end.Format(time.RFC3339)},
+		DateAfter:  &wrappers.StringValue{Value: from.Format(time.RFC3339)},
+		DateBefore: &wrappers.StringValue{Value: to.Format(time.RFC3339)},
 		Sort:       &wrappers.StringValue{Value: "date_asc"},
 	}
 
