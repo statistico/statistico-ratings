@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/Masterminds/squirrel v1.5.0
+	github.com/aws/aws-sdk-go v1.42.3 // indirect
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/evalphobia/logrus_sentry v0.8.2
@@ -13,7 +14,6 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.1.0 // indirect
 	github.com/jonboulle/clockwork v0.2.2
 	github.com/lib/pq v1.10.2
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/statistico/statistico-football-data-go-grpc-client v0.0.0-20210830190329-53083a414708
