@@ -79,10 +79,10 @@ jobs:
       - aws-ecs/update-task-definition:
           family: 'statistico-ratings-cron'
           container-image-name-updates: >
-            container=statistico-ratings-cron,tag=${CIRCLE_SHA1},
+            container=statistico-ratings-cron,tag=latest,
       - aws-ecs/update-service:
           family: 'statistico-ratings'
           cluster-name: 'statistico-production'
           container-image-name-updates: >
-            container=statistico-ratings-grpc,tag=${CIRCLE_SHA1},
-            container=statistico-ratings-migrate,tag=${CIRCLE_SHA1}
+            container=statistico-ratings-grpc,tag=latest,
+            container=statistico-ratings-migrate,tag=latest
