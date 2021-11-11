@@ -158,8 +158,8 @@ func TestFetcher_ByDate(t *testing.T) {
 		fetcher := fixture.NewFetcher(competitions, fixtureClient, seasonClient, clock)
 
 		req := mock.MatchedBy(func(r *statistico.FixtureSearchRequest) bool {
-			assert.Equal(t, "2021-07-11T00:00:00Z", r.DateAfter.GetValue())
-			assert.Equal(t, "2021-07-11T23:59:59Z", r.DateBefore.GetValue())
+			assert.Equal(t, "2021-03-12T00:00:00Z", r.DateAfter.GetValue())
+			assert.Equal(t, "2021-03-13T00:00:00Z", r.DateBefore.GetValue())
 			assert.Equal(t, "date_asc", r.Sort.GetValue())
 			return true
 		})
@@ -168,7 +168,10 @@ func TestFetcher_ByDate(t *testing.T) {
 
 		fixtureClient.On("Search", ctx, req).Return(response, nil)
 
-		fixtures, err := fetcher.ByDate(ctx, time.Unix(1626008664, 0))
+		from := time.Unix(1615507200, 0)
+		to := time.Unix(1615593600, 0)
+
+		fixtures, err := fetcher.ByDate(ctx, from, to)
 
 		if err != nil {
 			t.Fatalf("Expected nil, got %s", err.Error())
@@ -195,15 +198,18 @@ func TestFetcher_ByDate(t *testing.T) {
 		e := errors.New("fixture client error")
 
 		req := mock.MatchedBy(func(r *statistico.FixtureSearchRequest) bool {
-			assert.Equal(t, "2021-07-11T00:00:00Z", r.DateAfter.GetValue())
-			assert.Equal(t, "2021-07-11T23:59:59Z", r.DateBefore.GetValue())
+			assert.Equal(t, "2021-03-12T00:00:00Z", r.DateAfter.GetValue())
+			assert.Equal(t, "2021-03-13T00:00:00Z", r.DateBefore.GetValue())
 			assert.Equal(t, "date_asc", r.Sort.GetValue())
 			return true
 		})
 
 		fixtureClient.On("Search", ctx, req).Return([]*statistico.Fixture{}, e)
 
-		_, err := fetcher.ByDate(ctx, time.Unix(1626008664, 0))
+		from := time.Unix(1615507200, 0)
+		to := time.Unix(1615593600, 0)
+
+		_, err := fetcher.ByDate(ctx, from, to)
 
 		if err == nil {
 			t.Fatal("Expected error, got nil")
@@ -226,8 +232,8 @@ func TestFetcher_ByDate(t *testing.T) {
 		fetcher := fixture.NewFetcher(competitions, fixtureClient, seasonClient, clock)
 
 		req := mock.MatchedBy(func(r *statistico.FixtureSearchRequest) bool {
-			assert.Equal(t, "2021-07-11T00:00:00Z", r.DateAfter.GetValue())
-			assert.Equal(t, "2021-07-11T23:59:59Z", r.DateBefore.GetValue())
+			assert.Equal(t, "2021-03-12T00:00:00Z", r.DateAfter.GetValue())
+			assert.Equal(t, "2021-03-13T00:00:00Z", r.DateBefore.GetValue())
 			assert.Equal(t, "date_asc", r.Sort.GetValue())
 			return true
 		})
@@ -236,7 +242,10 @@ func TestFetcher_ByDate(t *testing.T) {
 
 		fixtureClient.On("Search", ctx, req).Return(response, nil)
 
-		fixtures, err := fetcher.ByDate(ctx, time.Unix(1626008664, 0))
+		from := time.Unix(1615507200, 0)
+		to := time.Unix(1615593600, 0)
+
+		fixtures, err := fetcher.ByDate(ctx, from, to)
 
 		if err != nil {
 			t.Fatalf("Expected nil, got %s", err.Error())

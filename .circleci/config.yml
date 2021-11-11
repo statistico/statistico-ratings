@@ -76,11 +76,10 @@ jobs:
       - image: 'circleci/python:3.7.1'
     steps:
       - aws-cli/setup
-#      - aws-ecs/update-service:
-#          family: 'statistico-ratings-grpc'
-#          cluster-name: 'statistico-production'
-#          container-image-name-updates: >
-#            container=grpc,image-and-tag=${AWS_ECR_ACCOUNT_URL}/statistico-ratings:${CIRCLE_SHA1}
+      - aws-ecs/update-task-definition:
+          family: 'statistico-ratings-cron'
+          container-image-name-updates: >
+            container=statistico-ratings-cron,tag=${CIRCLE_SHA1},
       - aws-ecs/update-service:
           family: 'statistico-ratings'
           cluster-name: 'statistico-production'

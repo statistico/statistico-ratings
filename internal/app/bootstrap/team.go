@@ -11,7 +11,12 @@ func (c Container) TeamRatingCalculator() team.RatingCalculator {
 }
 
 func (c Container) TeamRatingHandler() team.RatingHandler {
-	return team.NewHandler(c.FixtureFetcher(), c.TeamRatingProcessor(), c.Logger)
+	return team.NewHandler(
+		c.FixtureFetcher(),
+		c.TeamRatingProcessor(),
+		c.Clock,
+		c.Logger,
+	)
 }
 
 func (c Container) TeamRatingProcessor() team.RatingProcessor {
