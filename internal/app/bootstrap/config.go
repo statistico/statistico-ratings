@@ -5,11 +5,19 @@ import (
 )
 
 type Config struct {
+	AwsConfig
 	Database
 	KFactorMapping
 	Sentry
 	StatisticoDataService
 	SupportedCompetitions []uint64
+}
+
+type AwsConfig struct {
+	Key      string
+	Region   string
+	Secret   string
+	S3Bucket string
 }
 
 type Database struct {
@@ -34,6 +42,13 @@ type StatisticoDataService struct {
 
 func BuildConfig() *Config {
 	config := Config{}
+
+	config.AwsConfig = AwsConfig{
+		Key:      os.Getenv("AWS_KEY"),
+		Region:   os.Getenv("AWS_REGION"),
+		Secret:   os.Getenv("AWS_SECRET"),
+		S3Bucket: os.Getenv("AWS_S3_BUCKET"),
+	}
 
 	config.Database = Database{
 		Driver:   os.Getenv("DB_DRIVER"),
