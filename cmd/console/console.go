@@ -63,6 +63,35 @@ func main() {
 					},
 				},
 			},
+			{
+				Name:        "team:today",
+				Usage:       "Calculate team ratings for today's fixtures",
+				Description: "Calculate team ratings for today's fixtures",
+				Before: func(c *cli.Context) error {
+					fmt.Println("Calculating team ratings...")
+					return nil
+				},
+				After: func(c *cli.Context) error {
+					fmt.Println("Complete.")
+					return nil
+				},
+				Action: func(c *cli.Context) error {
+					err := handler.Today(ctx, c.Int("hour"))
+
+					if err != nil {
+						fmt.Printf("error: %s\n", err.Error())
+					}
+
+					return nil
+				},
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:     "hour",
+						Usage:    "Process the days fixture played before the given hour",
+						Required: true,
+					},
+				},
+			},
 		},
 	}
 
