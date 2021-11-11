@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/csv"
 	"fmt"
 	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
@@ -13,6 +12,7 @@ import (
 
 func main() {
 	app := bootstrap.BuildContainer(bootstrap.BuildConfig())
+	reader := app.FilesystemReader()
 	handler := app.TeamRatingHandler()
 	ctx := context.Background()
 
@@ -32,13 +32,13 @@ func main() {
 					return nil
 				},
 				Action: func(c *cli.Context) error {
-					cs, err := os.Open(c.String("filepath"))
+					r, err := reader.Reader(c.String("filepath"))
 
 					if err != nil {
 						return err
 					}
 
-					seasons := csv.NewReader(cs)
+					seasons := csv.NewReader(r)
 
 					for {
 						row, err := seasons.Read()
@@ -49,7 +49,7 @@ func main() {
 
 						comp, _ := strconv.ParseUint(row[0], 0, 64)
 						season, _ := strconv.ParseUint(row[1], 0, 64)
-
+						
 						handler.ByCompetition(ctx, comp, season)
 					}
 
