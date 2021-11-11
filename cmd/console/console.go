@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/csv"
 	"fmt"
 	"github.com/statistico/statistico-ratings/internal/app/bootstrap"
