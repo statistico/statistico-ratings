@@ -34,7 +34,6 @@ func (t *TeamRatingService) GetTeamRatings(ctx context.Context, r *statistico.Te
 	res := statistico.TeamRatingResponse{}
 
 	for _, rt := range ratings {
-		t.logger.Errorf("Attack points: %+v", rt.Attack.Total)
 		st := statistico.TeamRating{
 			TeamId:    rt.TeamID,
 			FixtureId: rt.FixtureID,
