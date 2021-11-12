@@ -23,41 +23,41 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 			Id: 17462,
 		},
 		HomeTeam: &statistico.Team{
-			Id: 10,
+			Id: 1,
 		},
 		AwayTeam: &statistico.Team{
-			Id: 12,
+			Id: 8,
 		},
 		DateTime: &statistico.Date{Utc: 1630343736},
 	}
 
 	home := team.Rating{
-		TeamID:    10,
+		TeamID:    1,
 		FixtureID: 25,
 		SeasonID:  17462,
 		Attack: team.Points{
-			Total:      167.10,
-			Difference: 5,
+			Total:      1225.67,
+			Difference: 8.06,
 		},
 		Defence: team.Points{
-			Total:      152.45,
-			Difference: -4,
+			Total:      1228.47,
+			Difference: -6.85,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
 		Timestamp:   time.Now(),
 	}
 
 	away := team.Rating{
-		TeamID:    12,
+		TeamID:    8,
 		FixtureID: 25,
 		SeasonID:  17462,
 		Attack: team.Points{
-			Total:      170,
-			Difference: 15,
+			Total:      1518.33,
+			Difference: -5.67,
 		},
 		Defence: team.Points{
-			Total:      42.45,
-			Difference: -14,
+			Total:      790.72,
+			Difference: 17.07,
 		},
 		FixtureDate: time.Unix(1630343736, 0),
 		Timestamp:   time.Now(),
@@ -77,8 +77,24 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 		res := statistico.FixtureEventsResponse{
 			Goals: []*statistico.GoalEvent{
 				{
-					TeamId: 10,
-					Minute: 47,
+					TeamId: 1,
+					Minute: 4,
+				},
+				{
+					TeamId: 8,
+					Minute: 42,
+				},
+				{
+					TeamId: 1,
+					Minute: 67,
+				},
+				{
+					TeamId: 1,
+					Minute: 74,
+				},
+				{
+					TeamId: 8,
+					Minute: 83,
 				},
 			},
 		}
@@ -95,23 +111,23 @@ func TestRatingCalculator_ForFixture(t *testing.T) {
 
 		a := assert.New(t)
 
-		a.Equal(uint64(10), newHome.TeamID)
+		a.Equal(uint64(1), newHome.TeamID)
 		a.Equal(uint64(26), newHome.FixtureID)
 		a.Equal(uint64(17462), newHome.SeasonID)
-		a.Equal(168.37, newHome.Attack.Total)
-		a.Equal(1.27, newHome.Attack.Difference)
-		a.Equal(145.73, newHome.Defence.Total)
-		a.Equal(-6.72, newHome.Defence.Difference)
+		a.Equal(1241.79, newHome.Attack.Total)
+		a.Equal(16.12, newHome.Attack.Difference)
+		a.Equal(1222.41, newHome.Defence.Total)
+		a.Equal(-6.06, newHome.Defence.Difference)
 		a.Equal(time.Unix(1630343736, 0), newHome.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 
-		a.Equal(uint64(12), newAway.TeamID)
+		a.Equal(uint64(8), newAway.TeamID)
 		a.Equal(uint64(26), newAway.FixtureID)
 		a.Equal(uint64(17462), newAway.SeasonID)
-		a.Equal(163.28, newAway.Attack.Total)
-		a.Equal(-6.72, newAway.Attack.Difference)
-		a.Equal(43.720000000000006, newAway.Defence.Total)
-		a.Equal(1.27, newAway.Defence.Difference)
+		a.Equal(1512.27, newAway.Attack.Total)
+		a.Equal(-6.06, newAway.Attack.Difference)
+		a.Equal(806.84, newAway.Defence.Total)
+		a.Equal(16.12, newAway.Defence.Difference)
 		a.Equal(time.Unix(1630343736, 0), newAway.FixtureDate)
 		a.Equal(time.Date(1984, time.April, 4, 0, 0, 0, 0, time.UTC), newHome.Timestamp)
 	})
