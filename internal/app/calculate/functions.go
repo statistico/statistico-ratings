@@ -13,12 +13,12 @@ func PointsValue(attack, defence float64, k, goals float64) float64 {
 			return -k
 		}
 
-		kg := (defence / attack) * (k * 1.5)
+		kg := (attack / defence) * (k * 1.5)
 
 		return -float64(int(kg*100)) / 100
 	}
 
-	kg := (defence / attack) * k * goals
+	kg := (attack / defence) * k * goals
 
 	return float64(int(kg*100)) / 100
 }
